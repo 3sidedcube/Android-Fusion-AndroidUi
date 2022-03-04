@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Default fusion colours - can be overridden in app resources -->
+	<color name="fusion_default_border_colour">@color/greyLight</color>
+	<color name="fusion_default_shadow_colour">@color/greyLight</color>
+	<color name="fusion_default_bullet_group_view_background_colour">@color/white</color>
+	<color name="fusion_default_bullet_view_background_colour">@color/white</color>
+	<color name="fusion_default_button_view_background_colour">@color/white</color>
+	<color name="fusion_default_divider_view_background_colour">@color/greyLight</color>
+	<color name="fusion_default_image_view_background_colour">@color/white</color>
+	<color name="fusion_default_list_item_view_background_colour">@color/white</color>
+	<color name="fusion_default_text_view_background_colour">@color/white</color>
+	<color name="fusion_default_text_view_text_colour">@color/black</color>
+	<color name="fusion_default_button_view_text_colour">@color/black</color>
+
+	<!-- General colour definitions -->
+	<color name="black">#FF000000</color>
+	<color name="white">#FFFFFFFF</color>
+	<color name="greyLight">#E2DFDF</color>
+</resources>

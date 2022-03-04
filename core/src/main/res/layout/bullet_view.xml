@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<com.cube.fusion.android.core.view.FusionCardView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/card_container"
+		android:focusable="true"
+		android:importantForAccessibility="yes"
+		app:cardElevation="0dp"
+		app:cardPreventCornerOverlap="true"
+		tools:cardBackgroundColor="@color/fusion_default_bullet_view_background_colour">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/bullet_view_container"
+			android:importantForAccessibility="noHideDescendants"
+			android:orientation="horizontal">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/order"
+				app:layout_constraintBottom_toBottomOf="@+id/title"
+				app:layout_constraintEnd_toStartOf="@+id/title"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:text="4" />
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<include
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/title"
+					layout="@layout/text_view"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toEndOf="@+id/order"
+					app:layout_constraintTop_toTopOf="parent" />
+
+				<include
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/subtitle"
+					layout="@layout/text_view"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="@+id/title"
+					app:layout_constraintTop_toBottomOf="@+id/title" />
+			</LinearLayout>
+		</LinearLayout>
+	</com.cube.fusion.android.core.view.FusionCardView>
+</RelativeLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:id="@+id/divider_container">
+
+	<com.google.android.material.card.MaterialCardView
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/fusion_default_divider_height"
+		android:id="@+id/divider"
+		tools:background="@color/fusion_default_divider_view_background_colour"
+		app:cardElevation="0dp" />
+</RelativeLayout>

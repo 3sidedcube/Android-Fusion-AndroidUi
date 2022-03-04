@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!--	Default fusion dimensions - can be overridden in app resources -->
+	<dimen name="fusion_default_margin_left">0dp</dimen>
+	<dimen name="fusion_default_margin_top">0dp</dimen>
+	<dimen name="fusion_default_margin_right">0dp</dimen>
+	<dimen name="fusion_default_margin_bottom">0dp</dimen>
+	<dimen name="fusion_default_padding_left">0dp</dimen>
+	<dimen name="fusion_default_padding_top">0dp</dimen>
+	<dimen name="fusion_default_padding_right">0dp</dimen>
+	<dimen name="fusion_default_padding_bottom">0dp</dimen>
+	<dimen name="fusion_default_border_width">0dp</dimen>
+	<dimen name="fusion_default_bullet_group_view_corner_radius">0dp</dimen>
+	<dimen name="fusion_default_bullet_view_corner_radius">0dp</dimen>
+	<dimen name="fusion_default_button_view_corner_radius">0dp</dimen>
+	<dimen name="fusion_default_divider_view_corner_radius">0dp</dimen>
+	<dimen name="fusion_default_image_view_corner_radius">0dp</dimen>
+	<dimen name="fusion_default_list_item_view_corner_radius">0dp</dimen>
+	<dimen name="fusion_default_text_view_corner_radius">0dp</dimen>
+	<dimen name="fusion_default_divider_height">2dp</dimen>
+	<dimen name="fusion_default_list_item_view_image_max_width">100dp</dimen>
+	<dimen name="fusion_default_list_item_view_image_max_height">100dp</dimen>
+	<dimen name="fusion_default_text_view_text_size">14sp</dimen>
+	<dimen name="fusion_default_button_view_text_size">14sp</dimen>
+	<item name="fusion_default_text_view_letter_spacing" type="dimen" format="float">0.0</item>
+	<item name="fusion_default_button_view_letter_spacing" type="dimen" format="float">0.0</item>
+
+	<dimen name="list_item_view_spacing_before_chevron">14dp</dimen>
+</resources>

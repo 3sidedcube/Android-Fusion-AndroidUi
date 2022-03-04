@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:id="@+id/image_container"
+	app:cardElevation="0dp"
+	tools:cardBackgroundColor="@color/fusion_default_image_view_background_colour">
+
+    <LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<com.google.android.material.imageview.ShapeableImageView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/image"
+			android:adjustViewBounds="true" />
+	</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

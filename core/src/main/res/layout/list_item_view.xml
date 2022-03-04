@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				xmlns:app="http://schemas.android.com/apk/res-auto"
+				xmlns:tools="http://schemas.android.com/tools"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+	<com.cube.fusion.android.core.view.FusionCardView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/card_container"
+		app:cardPreventCornerOverlap="true"
+		tools:cardBackgroundColor="@color/fusion_default_list_item_view_background_colour"
+		app:cardElevation="0dp">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/list_item_container"
+			android:layout_gravity="center"
+			android:orientation="horizontal">
+
+			<include
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/list_item_image"
+				layout="@layout/image_view"
+				android:layout_gravity="center" />
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:layout_gravity="center"
+				android:layout_marginEnd="@dimen/list_item_view_spacing_before_chevron"
+				android:layout_weight="1"
+				android:orientation="vertical">
+
+				<include
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/title"
+					layout="@layout/text_view" />
+
+				<include
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/subtitle"
+					layout="@layout/text_view" />
+			</LinearLayout>
+
+			<com.google.android.material.imageview.ShapeableImageView
+				android:layout_width="22dp"
+				android:layout_height="22dp"
+				android:id="@+id/chevron"
+				android:layout_gravity="center"
+				android:src="?attr/fusionListItemChevron"/>
+
+		</LinearLayout>
+	</com.cube.fusion.android.core.view.FusionCardView>
+</RelativeLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Fusion Lib</string>
+
+	<!-- Error messaging -->
+	<string name="error">Failed to load the page</string>
+	<string name="internet_submit">The API url is not correct</string>
+	<string name="user_authentication">Unsupported protocol</string>
+	<string name="failed_to_load_website">Failed to load page</string>
+	<string name="call_not_allowed">Could not call the number</string>
+	<string name="pdf_not_supported">PDF files are not supported</string>
+
+	<!-- Email functionality -->
+	<string name="send_email_header">Send via:</string>
+</resources>
