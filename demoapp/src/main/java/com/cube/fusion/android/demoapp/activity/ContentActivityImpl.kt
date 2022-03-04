@@ -8,6 +8,7 @@ import com.cube.fusion.android.activity.FusionContentActivity
 import com.cube.fusion.android.activity.actions.DefaultActivityActionHandlers
 import com.cube.fusion.android.core.config.AndroidFusionConfig
 import com.cube.fusion.android.core.databinding.ContentFragmentViewBinding
+import com.cube.fusion.android.core.databinding.ToolbarViewBinding
 import com.cube.fusion.android.core.helper.ViewHelper
 import com.cube.fusion.android.demoapp.databinding.ActivityFusionImplBinding
 import com.cube.fusion.android.demoapp.images.PicassoImageLoader
@@ -36,7 +37,10 @@ class ContentActivityImpl : FusionContentActivity() {
 	}
 
 	lateinit var binding: ActivityFusionImplBinding
-	override val contentBinding: ContentFragmentViewBinding get() = binding.pageContent
+	@Suppress("TYPE_MISMATCH") // Note: Android Studio incorrectly types this due to being part of the repo with the view in. This annotation would not be needed on an actual project.
+	override val contentBinding: ContentFragmentViewBinding by lazy { ContentFragmentViewBinding.bind(binding.pageContent) }
+	@Suppress("TYPE_MISMATCH") // Note: Android Studio incorrectly types this due to being part of the repo with the view in. This annotation would not be needed on an actual project.
+	private val toolbarBinding: ToolbarViewBinding by lazy { ToolbarViewBinding.bind(binding.toolbar) }
 	override val fusionConfig: AndroidFusionConfig = AndroidFusionConfig(
 		populator = LegacyDisplayPopulator,
 		actionHandler = DefaultActivityActionHandlers { view, action ->
@@ -51,7 +55,7 @@ class ContentActivityImpl : FusionContentActivity() {
 
 	override fun setTitle(title: CharSequence?) {
 		super.setTitle(title)
-		binding.toolbar.screenTitle.text = title
+		toolbarBinding.screenTitle.text = title
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +63,7 @@ class ContentActivityImpl : FusionContentActivity() {
 		binding = ActivityFusionImplBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 
-		binding.toolbar.backAction.setOnClickListener {
+		toolbarBinding.backAction.setOnClickListener {
 			finish()
 		}
 
