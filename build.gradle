@@ -13,6 +13,32 @@ buildscript {
 	}
 }
 
+/**
+ * Gets the version of dependency Fusion libs, ensuring that (if building a pre-release or release build with Jitpack) it matches this library's version
+ *
+ * @param requiredVersion the version that is required for this project
+ * @return the consistent required version identifier for Fusion libs
+ */
+def withConsistentVersioning(requiredVersion) {
+	if("$System.env.JITPACK".toString() == "true") {
+		def jitpackVersion = "$System.env.VERSION".toString()
+		if(jitpackVersion ==~ /\w?\d+\.\d+\.\d+(-\w+)?/)
+		{
+			println "Pre-release or release version - checking for versioning consistency"
+			if(requiredVersion != jitpackVersion) {
+				throw new GradleException("Required version $requiredVersion does not match build version $jitpackVersion")
+			}
+		}
+	}
+	return requiredVersion
+}
+
+ext {
+	// Do not remove the call to withConsistentVersioning - this ensures that versions for all Fusion libs are aligned.
+	// Instead, update the argument passed to withConsistentVersioning to the target lib version
+	fusionLibVersion = withConsistentVersioning('5f7807a715')
+}
+
 task clean(type: Delete) {
 	delete rootProject.buildDir
 }
