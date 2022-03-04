@@ -13,19 +13,38 @@ It also provides Fragment and Activity abstract classes / implementations for ea
 Finally, a demo app is included, to demonstrate how a Fusion app could be set up.
 
 ## Installation
-In order to utilise the core AndroidUi module in a project, add the following dependency to your `build.gradle` file:
+[JitPack](https://jitpack.io/) is used to provide the Fusion artifacts.
+In order to utilise the library in a project, update your `settings.gradle` (or root project `build.gradle` on older projects) to include the Jitpack maven repository:
 ```groovy
-    //TODO
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+```
+Then, in order to utilise the core AndroidUi module in a project, add the following dependency to your `build.gradle` file:
+```groovy
+    implementation 'com.github.3sidedcube.Android-Fusion-AndroidUi:core:{versionCode}'
 ```
 To utilise the Fragment module, add the following dependency:
 ```groovy
-    //TODO
+    implementation 'com.github.3sidedcube.Android-Fusion-AndroidUi:fragment:{versionCode}'
 ```
 To utilise the Activity module, add the following dependency:
 ```groovy
-    //TODO
+    implementation 'com.github.3sidedcube.Android-Fusion-AndroidUi:activity:{versionCode}'
 ```
-[JitPack](https://jitpack.io/) is used to provide the Fusion artifacts.
+If you wish to utilise all modules in this repo, you can alternatively add the following dependency:
+```groovy
+    implementation 'com.github.3sidedcube:Android-Fusion-AndroidUi:{versionCode}'
+```
+As these builds are provided using Jitpack, `{versionCode}` can be replaced with:
+
+- A specific commit, e.g `1a2b3c4d5e`
+- A specific branch's latest build, e.g `feature~jitpack-setup-SNAPSHOT`
+- A specific pre-release tag, e.g `1.0.0-rc1`
+- A specific release tag, e.g `1.0.0`
+
+It is recommended that you use this library at a specific release tag, to ensure that the library is in a stable state.
 
 ## Usage
 See the demo app to get an impression of the behaviour, or see the Wiki.
