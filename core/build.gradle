@@ -43,6 +43,6 @@ dependencies {
 	// Material design dependency
 	implementation 'com.google.android.material:material:1.5.0'
 
-	// Fusion dependencies
-	implementation 'com.github.3sidedcube.Android-Fusion-Core:core:5f7807a715'
+	// Core Fusion dependency - specify version in the root build.gradle
+	implementation "com.github.3sidedcube.Android-Fusion-Core:core:${project.fusionLibVersion}"
 }

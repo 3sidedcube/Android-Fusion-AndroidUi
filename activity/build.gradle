@@ -43,6 +43,6 @@ dependencies {
 	// Same-repo Fusion dependencies
 	implementation project(path: ":core")
 
-	// Core Fusion dependency
-	implementation 'com.github.3sidedcube.Android-Fusion-Core:core:5f7807a715'
+	// Core Fusion dependency - specify version in the root build.gradle
+	implementation "com.github.3sidedcube.Android-Fusion-Core:core:${project.fusionLibVersion}"
 }
