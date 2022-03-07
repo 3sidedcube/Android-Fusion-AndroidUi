@@ -37,10 +37,8 @@ class ContentActivityImpl : FusionContentActivity() {
 	}
 
 	lateinit var binding: ActivityFusionImplBinding
-	@Suppress("TYPE_MISMATCH") // Note: Android Studio incorrectly types this due to being part of the repo with the view in. This annotation would not be needed on an actual project.
-	override val contentBinding: ContentFragmentViewBinding by lazy { ContentFragmentViewBinding.bind(binding.pageContent) }
-	@Suppress("TYPE_MISMATCH") // Note: Android Studio incorrectly types this due to being part of the repo with the view in. This annotation would not be needed on an actual project.
-	private val toolbarBinding: ToolbarViewBinding by lazy { ToolbarViewBinding.bind(binding.toolbar) }
+	override lateinit var contentBinding: ContentFragmentViewBinding
+	private lateinit var toolbarBinding: ToolbarViewBinding
 	override val fusionConfig: AndroidFusionConfig = AndroidFusionConfig(
 		populator = LegacyDisplayPopulator,
 		actionHandler = DefaultActivityActionHandlers { view, action ->
@@ -58,15 +56,28 @@ class ContentActivityImpl : FusionContentActivity() {
 		toolbarBinding.screenTitle.text = title
 	}
 
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		binding = ActivityFusionImplBinding.inflate(layoutInflater)
 		setContentView(binding.root)
+		setUpSubBindings()
 
 		toolbarBinding.backAction.setOnClickListener {
 			finish()
 		}
 
 		displayActivityPage(savedInstanceState)
+	}
+
+	@Suppress("TYPE_MISMATCH")
+	/**
+	 * Set up the sub-bindings needed for interacting with the whole view structure
+	 * NOTE: Android Studio incorrectly types binding properties due to being part of the repo with the view in.
+	 * The @Suppress annotation would not be needed on an actual project.
+	 */
+	private fun setUpSubBindings() {
+		contentBinding = ContentFragmentViewBinding.bind(binding.pageContent)
+		toolbarBinding = ToolbarViewBinding.bind(binding.toolbar)
 	}
 }
