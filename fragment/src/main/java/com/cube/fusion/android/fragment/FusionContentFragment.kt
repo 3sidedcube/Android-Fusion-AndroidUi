@@ -56,10 +56,7 @@ class FusionContentFragment(private val fusionConfig: AndroidFusionConfig) : Fra
 			displayError(EmptyUrlError())
 		}
 		else {
-			adapter = FusionViewAdapter().apply {
-				actionHandler = fusionConfig.actionHandler
-				imageLoader = fusionConfig.imageLoader
-			}
+			adapter = FusionViewAdapter(fusionConfig)
 			binding.recyclerView.adapter = adapter
 			binding.recyclerView.addItemDecoration(DropShadowDecorator())
 			loadPages(url)
