@@ -10,8 +10,11 @@ import com.cube.fusion.android.core.config.AndroidFusionConfig
 import com.cube.fusion.android.core.databinding.ContentFragmentViewBinding
 import com.cube.fusion.android.core.databinding.ToolbarViewBinding
 import com.cube.fusion.android.core.helper.ViewHelper
+import com.cube.fusion.android.core.resolver.DefaultViewResolver
 import com.cube.fusion.android.demoapp.databinding.ActivityFusionImplBinding
+import com.cube.fusion.android.demoapp.holder.CardViewHolder
 import com.cube.fusion.android.demoapp.images.PicassoImageLoader
+import com.cube.fusion.android.demoapp.model.Card
 import com.cube.fusion.populator.legacy.LegacyDisplayPopulator
 
 /**
@@ -39,17 +42,23 @@ class ContentActivityImpl : FusionContentActivity() {
 	lateinit var binding: ActivityFusionImplBinding
 	override lateinit var contentBinding: ContentFragmentViewBinding
 	private lateinit var toolbarBinding: ToolbarViewBinding
-	override val fusionConfig: AndroidFusionConfig = AndroidFusionConfig(
-		populator = LegacyDisplayPopulator(ViewHelper.viewResolvers.values),
-		actionHandler = DefaultActivityActionHandlers { view, action ->
-			getIntent(view.context, action.extractClick())
-		}.apply {
-			registerNativeActionForLink(NATIVE_ACTION_KEY) { view, _ ->
-				view.context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
-			}
-		},
-		imageLoader = PicassoImageLoader
-	)
+	override val fusionConfig: AndroidFusionConfig = run {
+		val resolvers = ViewHelper.getDefaultViewResolvers().apply {
+			put("Card", DefaultViewResolver(Card::class.java, CardViewHolder.Factory::class.java))
+		}
+		AndroidFusionConfig(
+			populator = LegacyDisplayPopulator(resolvers.values),
+			actionHandler = DefaultActivityActionHandlers { view, action ->
+				getIntent(view.context, action.extractClick())
+			}.apply {
+				registerNativeActionForLink(NATIVE_ACTION_KEY) { view, _ ->
+					view.context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+				}
+			},
+			imageLoader = PicassoImageLoader,
+			resolvers = resolvers
+		)
+	}
 
 	override fun setTitle(title: CharSequence?) {
 		super.setTitle(title)
