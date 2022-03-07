@@ -1,6 +1,7 @@
 plugins {
 	id 'com.android.library'
 	id 'kotlin-android'
+	id 'maven-publish'
 }
 
 android {
@@ -32,6 +33,23 @@ android {
 	buildFeatures {
 		viewBinding true
 	}
+
+	afterEvaluate {
+		publishing {
+			publications {
+				// Creates a Maven publication called "release".
+				release(MavenPublication) {
+					// Applies the component for the release build variant.
+					from components.release
+
+					// You can then customize attributes of the publication as shown below.
+					groupId = 'com.cube.fusion.android.activity'
+					artifactId = 'activity'
+					version = project.fusionLibVersion
+				}
+			}
+		}
+	}
 }
 
 dependencies {
@@ -43,6 +61,6 @@ dependencies {
 	// Same-repo Fusion dependencies
 	implementation project(path: ":core")
 
-	// Core Fusion dependency
-	implementation 'com.github.3sidedcube.Android-Fusion-Core:core:5f7807a715'
+	// Core Fusion dependency - specify version in the root build.gradle
+	implementation "com.github.3sidedcube.Android-Fusion-Core:core:${project.fusionLibVersion}"
 }

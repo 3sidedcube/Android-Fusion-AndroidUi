@@ -45,13 +45,14 @@ dependencies {
 	// Lifecycle KTX
 	implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
 
-	// Fusion dependencies
-	implementation 'com.github.3sidedcube.Android-Fusion-Core:core:5f7807a715'
-	implementation 'com.github.3sidedcube.Android-Fusion-Core:populator-legacy:5f7807a715'
+	// Fusion dependencies - specify version in the root build.gradle
+	implementation "com.github.3sidedcube.Android-Fusion-Core:core:${project.fusionLibVersion}"
+	implementation "com.github.3sidedcube.Android-Fusion-Core:populator-legacy:${project.fusionLibVersion}"
 
-	// Same-repo Fusion dependencies: TODO replace with imports as above when Jitpack is integrated with this lib
-	implementation project(path: ":activity")
-	implementation project(path: ":core")
+	// Same-repo Fusion dependencies
+	def currentLibVersion = "feature~jitpack-setup-SNAPSHOT"
+	implementation "com.github.3sidedcube.Android-Fusion-AndroidUi:core:$currentLibVersion"
+	implementation "com.github.3sidedcube.Android-Fusion-AndroidUi:activity:$currentLibVersion"
 
 	// Image loading/populating
 	implementation 'com.squareup.picasso:picasso:2.71828'

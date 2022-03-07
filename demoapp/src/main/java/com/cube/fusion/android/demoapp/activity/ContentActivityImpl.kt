@@ -8,6 +8,7 @@ import com.cube.fusion.android.activity.FusionContentActivity
 import com.cube.fusion.android.activity.actions.DefaultActivityActionHandlers
 import com.cube.fusion.android.core.config.AndroidFusionConfig
 import com.cube.fusion.android.core.databinding.ContentFragmentViewBinding
+import com.cube.fusion.android.core.databinding.ToolbarViewBinding
 import com.cube.fusion.android.core.helper.ViewHelper
 import com.cube.fusion.android.demoapp.databinding.ActivityFusionImplBinding
 import com.cube.fusion.android.demoapp.images.PicassoImageLoader
@@ -36,7 +37,8 @@ class ContentActivityImpl : FusionContentActivity() {
 	}
 
 	lateinit var binding: ActivityFusionImplBinding
-	override val contentBinding: ContentFragmentViewBinding get() = binding.pageContent
+	override lateinit var contentBinding: ContentFragmentViewBinding
+	private lateinit var toolbarBinding: ToolbarViewBinding
 	override val fusionConfig: AndroidFusionConfig = AndroidFusionConfig(
 		populator = LegacyDisplayPopulator,
 		actionHandler = DefaultActivityActionHandlers { view, action ->
@@ -51,18 +53,31 @@ class ContentActivityImpl : FusionContentActivity() {
 
 	override fun setTitle(title: CharSequence?) {
 		super.setTitle(title)
-		binding.toolbar.screenTitle.text = title
+		toolbarBinding.screenTitle.text = title
 	}
+
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		binding = ActivityFusionImplBinding.inflate(layoutInflater)
 		setContentView(binding.root)
+		setUpSubBindings()
 
-		binding.toolbar.backAction.setOnClickListener {
+		toolbarBinding.backAction.setOnClickListener {
 			finish()
 		}
 
 		displayActivityPage(savedInstanceState)
+	}
+
+	@Suppress("TYPE_MISMATCH")
+	/**
+	 * Set up the sub-bindings needed for interacting with the whole view structure
+	 * NOTE: Android Studio incorrectly types binding properties due to being part of the repo with the view in.
+	 * The @Suppress annotation would not be needed on an actual project.
+	 */
+	private fun setUpSubBindings() {
+		contentBinding = ContentFragmentViewBinding.bind(binding.pageContent)
+		toolbarBinding = ToolbarViewBinding.bind(binding.toolbar)
 	}
 }
