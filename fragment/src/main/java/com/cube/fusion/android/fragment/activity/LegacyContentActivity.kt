@@ -32,7 +32,8 @@ class LegacyContentActivity : AppCompatActivity() {
 	private val fusionConfig = AndroidFusionConfig(
 		populator = LegacyDisplayPopulator(ViewHelper.viewResolvers.values),
 		actionHandler = DefaultActivityActionHandlers(LegacyContentActivity::class.java),
-		imageLoader = ImageLoadingManager.imageLoader
+		imageLoader = ImageLoadingManager.imageLoader,
+		resolvers = ViewHelper.viewResolvers
 	)
 	private val fragmentFactory = FusionContentFragmentFactory(fusionConfig)
 	override fun onCreate(savedInstanceState: Bundle?) {
