@@ -40,7 +40,7 @@ class ContentActivityImpl : FusionContentActivity() {
 	override lateinit var contentBinding: ContentFragmentViewBinding
 	private lateinit var toolbarBinding: ToolbarViewBinding
 	override val fusionConfig: AndroidFusionConfig = AndroidFusionConfig(
-		populator = LegacyDisplayPopulator,
+		populator = LegacyDisplayPopulator(ViewHelper.viewResolvers.values),
 		actionHandler = DefaultActivityActionHandlers { view, action ->
 			getIntent(view.context, action.extractClick())
 		}.apply {

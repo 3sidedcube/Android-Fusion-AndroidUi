@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager
 import com.cube.fusion.android.activity.actions.DefaultActivityActionHandlers
 import com.cube.fusion.android.core.databinding.ContentActivityViewBinding
 import com.cube.fusion.android.core.config.AndroidFusionConfig
+import com.cube.fusion.android.core.helper.ViewHelper
 import com.cube.fusion.android.core.images.ImageLoadingManager
 import com.cube.fusion.android.fragment.FusionContentFragment
 import com.cube.fusion.android.fragment.R
@@ -29,7 +30,7 @@ class LegacyContentActivity : AppCompatActivity() {
 
 	private lateinit var binding: ContentActivityViewBinding
 	private val fusionConfig = AndroidFusionConfig(
-		populator = LegacyDisplayPopulator,
+		populator = LegacyDisplayPopulator(ViewHelper.viewResolvers.values),
 		actionHandler = DefaultActivityActionHandlers(LegacyContentActivity::class.java),
 		imageLoader = ImageLoadingManager.imageLoader
 	)
