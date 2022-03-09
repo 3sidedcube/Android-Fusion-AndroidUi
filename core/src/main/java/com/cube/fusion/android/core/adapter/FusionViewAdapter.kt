@@ -4,12 +4,13 @@ import android.os.Parcelable
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cube.fusion.android.core.actions.FusionAndroidActionHandler
-import com.cube.fusion.android.core.helper.ViewHelper
+import com.cube.fusion.android.core.config.AndroidFusionConfig
 import com.cube.fusion.android.core.holder.ActionHandlingViewHolder
 import com.cube.fusion.android.core.holder.FusionViewHolder
 import com.cube.fusion.android.core.holder.ImageLoadingViewHolder
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.images.FusionAndroidImageLoader
+import com.cube.fusion.android.core.resolver.AndroidViewResolver
 import com.cube.fusion.core.model.Model
 import com.cube.fusion.core.model.views.Screen
 import kotlinx.parcelize.Parcelize
@@ -28,23 +29,20 @@ import kotlinx.parcelize.RawValue
  * of the scrolling (depending on how much content there is) diminishes with the amount of unique content
  * that the list is rendering.
  *
- * TODO: see if we can remove some or all of the calls to [notifyDataSetChanged]
+ * @param actionHandler the action handler to use for views which handle actions
+ * @param imageLoader the image loader to use for views which display images
+ * @param resolvers the view resolvers to use to construct the UI
  *
  * Created by Nikos Rapousis on 12/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
-class FusionViewAdapter() : RecyclerView.Adapter<FusionViewHolder<*>>() {
-	var actionHandler: FusionAndroidActionHandler? = null
-		set(value) {
-			field = value
-			notifyDataSetChanged()
-		}
+class FusionViewAdapter(
+	private val actionHandler: FusionAndroidActionHandler,
+	private val imageLoader: FusionAndroidImageLoader?,
+	private val resolvers: Map<String, AndroidViewResolver>
+) : RecyclerView.Adapter<FusionViewHolder<*>>() {
 
-	var imageLoader : FusionAndroidImageLoader? = null
-		set(value) {
-			field = value
-			notifyDataSetChanged()
-		}
+	constructor(androidConfig: AndroidFusionConfig): this(androidConfig.actionHandler, androidConfig.imageLoader, androidConfig.resolvers)
 
 	/**
 	 * Temporary store for adapter state
@@ -69,7 +67,7 @@ class FusionViewAdapter() : RecyclerView.Adapter<FusionViewHolder<*>>() {
 	 */
 	private var itemTypes = ArrayList<Class<out FusionViewHolderFactory>?>()
 
-	constructor(items: Collection<Model>?) : this() {
+	constructor(androidConfig: AndroidFusionConfig, items: Collection<Model>?) : this(androidConfig) {
 		setItems(items)
 	}
 
@@ -131,7 +129,7 @@ class FusionViewAdapter() : RecyclerView.Adapter<FusionViewHolder<*>>() {
 			}
 		}
 		else {
-			val holderClass = ViewHelper.viewResolvers[item.`class`]?.resolveViewHolder()
+			val holderClass = resolvers[item.`class`]?.resolveViewHolder()
 			if (holderClass != null) {
 				items.add(index, item)
 			}
@@ -178,6 +176,6 @@ class FusionViewAdapter() : RecyclerView.Adapter<FusionViewHolder<*>>() {
 
 	override fun getItemViewType(position: Int): Int {
 		val view = items[position]
-		return itemTypes.indexOf((ViewHelper.viewResolvers[view.`class`] ?: error("")).resolveViewHolder())
+		return itemTypes.indexOf((resolvers[view.`class`] ?: error("")).resolveViewHolder())
 	}
 }

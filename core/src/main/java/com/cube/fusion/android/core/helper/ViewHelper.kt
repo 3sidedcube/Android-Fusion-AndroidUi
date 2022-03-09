@@ -15,7 +15,7 @@ import com.cube.fusion.core.model.views.*
  * Copyright ® 3SidedCube. All rights reserved.
  */
 object ViewHelper {
-	val viewResolvers: MutableMap<String, AndroidViewResolver> = hashMapOf(
+	fun getDefaultViewResolvers(): MutableMap<String, AndroidViewResolver> = hashMapOf(
 		"Screen" to DefaultViewResolver(Screen::class.java, null),
 		"Text" to DefaultViewResolver(Text::class.java, TextViewHolder.Factory::class.java),
 		"Image" to DefaultViewResolver(Image::class.java, ImageViewHolder.Factory::class.java),

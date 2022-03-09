@@ -88,10 +88,7 @@ abstract class FusionContentActivity : AppCompatActivity(), FusionDisplayTarget,
 
 	override fun displayPage(page: Page) {
 		if (!this::adapter.isInitialized) {
-			adapter = FusionViewAdapter().apply {
-				actionHandler = fusionConfig.actionHandler
-				imageLoader = fusionConfig.imageLoader
-			}
+			adapter = FusionViewAdapter(fusionConfig)
 			contentBinding.recyclerView.adapter = adapter
 			contentBinding.recyclerView.addItemDecoration(DropShadowDecorator())
 		}

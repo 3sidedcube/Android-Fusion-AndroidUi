@@ -50,7 +50,7 @@ dependencies {
 	implementation "com.github.3sidedcube.Android-Fusion-Core:populator-legacy:${project.fusionLibVersion}"
 
 	// Same-repo Fusion dependencies
-	def currentLibVersion = "feature~jitpack-setup-SNAPSHOT"
+	def currentLibVersion = "feature~updated-view-resolution-SNAPSHOT"
 	implementation "com.github.3sidedcube.Android-Fusion-AndroidUi:core:$currentLibVersion"
 	implementation "com.github.3sidedcube.Android-Fusion-AndroidUi:activity:$currentLibVersion"
 
