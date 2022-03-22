@@ -1,0 +1,23 @@
+{
+	"id": "second",
+	"title": "Fusion AndroidUi Demo App - Second Page",
+	"screen": {
+		"class": "Screen",
+		"children": [
+			{
+				"class": "Text",
+				"content": "This is the second page of demo app content!",
+				"margin": {
+					"left": 5,
+					"right": 5,
+					"top": 5,
+					"bottom": 5
+				},
+				"font": {
+					"size": 22
+				},
+				"text_alignment": "center"
+			}
+		]
+	}
+}

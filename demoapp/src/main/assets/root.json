@@ -1,0 +1,63 @@
+{
+	"id": "root",
+	"title": "Fusion AndroidUi Demo App",
+	"screen": {
+		"class": "Screen",
+		"children": [
+			{
+				"class": "Text",
+				"content": "Welcome to the Fusion AndroidUi Demo App!",
+				"margin": {
+					"left": 5,
+					"right": 5,
+					"top": 5,
+					"bottom": 5
+				},
+				"font": {
+					"size": 22
+				},
+				"text_alignment": "center"
+			},
+			{
+				"class": "ListItem",
+				"title": {
+					"class": "Text",
+					"content": "Page redirect",
+					"font": {
+						"size": 17
+					}
+				},
+				"subtitle": {
+					"class": "Text",
+					"content": "Click here to redirect to a second page!",
+					"font": {
+						"size": 14
+					}
+				},
+				"action": {
+					"class": "PageAction",
+					"entry": {
+						"api_url": "second.json"
+					}
+				},
+				"margin": {
+					"left": 5,
+					"right": 5,
+					"top": 5,
+					"bottom": 5
+				},
+				"padding": {
+					"left": 5,
+					"right": 5,
+					"top": 5,
+					"bottom": 5
+				},
+				"border": {
+					"stroke_width": 1,
+					"color": "#ABABAB"
+				},
+				"corner_radius": 3
+			}
+		]
+	}
+}
