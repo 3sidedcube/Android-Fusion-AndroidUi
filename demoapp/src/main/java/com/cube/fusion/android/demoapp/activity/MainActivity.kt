@@ -15,10 +15,10 @@ import kotlinx.coroutines.launch
  */
 class MainActivity : AppCompatActivity() {
 	companion object {
-	   /*
-		* These currently point to the locally defined demo JSON data in the most recent release of this lib
-		* Feel free to locally update this URL and start screen to your own endpoints if you wish
-		*/
+		/*
+		 * These currently point to the locally defined demo JSON data in the most recent release of this lib
+		 * Feel free to locally update this URL and start screen to your own endpoints if you wish
+		 */
 		private const val DEMO_URL = "https://raw.githubusercontent.com/3sidedcube/Android-Fusion-AndroidUi/main/demoapp/src/main/assets/"
 		private const val START_SCREEN = "root.json"
 	}
