@@ -47,7 +47,8 @@ dependencies {
 
 	// Fusion dependencies - specify version in the root build.gradle
 	implementation "com.github.3sidedcube.Android-Fusion-Core:core:${project.fusionLibVersion}"
-	implementation "com.github.3sidedcube.Android-Fusion-Core:populator-legacy:${project.fusionLibVersion}"
+	implementation "com.github.3sidedcube.Android-Fusion-Core:populator-coroutine-source-cache:${project.fusionLibVersion}"
+	implementation "com.github.3sidedcube.Android-Fusion-Core:populator-retrofit:${project.fusionLibVersion}"
 
 	// Same-repo Fusion dependencies
 	def currentLibVersion = "v0.0.2-rc2"

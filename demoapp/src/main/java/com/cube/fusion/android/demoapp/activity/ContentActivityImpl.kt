@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import androidx.lifecycle.lifecycleScope
 import com.cube.fusion.android.activity.FusionContentActivity
 import com.cube.fusion.android.activity.actions.DefaultActivityActionHandlers
 import com.cube.fusion.android.core.config.AndroidFusionConfig
@@ -15,7 +16,7 @@ import com.cube.fusion.android.demoapp.databinding.ActivityFusionImplBinding
 import com.cube.fusion.android.demoapp.holder.CardViewHolder
 import com.cube.fusion.android.demoapp.images.PicassoImageLoader
 import com.cube.fusion.android.demoapp.model.Card
-import com.cube.fusion.populator.legacy.LegacyDisplayPopulator
+import com.cube.fusion.populator.retrofit.RetrofitDisplayPopulator
 
 /**
  * Content Activity implementation for the demo of Fusion AndroidUi
@@ -29,11 +30,16 @@ class ContentActivityImpl : FusionContentActivity() {
 		 * Get an intent to launch [ContentActivityImpl] with
 		 *
 		 * @param context the Android content to launch from
+		 * @param baseUrl the base URL of the Fusion API
 		 * @param link the URL or slug link of the Fusion screen to display
 		 *
 		 * @return an intent to [ContentActivityImpl] with the provided [link]
 		 */
-		fun getIntent(context: Context, link: String?) = getIntent(context, link, ContentActivityImpl::class.java)
+		fun getIntent(context: Context, baseUrl: String?, link: String?) = getIntent(context, link, ContentActivityImpl::class.java).apply {
+			putExtra(BASE_URL_EXTRA_KEY, baseUrl)
+		}
+
+		private const val BASE_URL_EXTRA_KEY = "BASE_URL_EXTRA_KEY"
 
 		// Named for the great developer who started this project
 		private const val NATIVE_ACTION_KEY = "nikos"
@@ -42,14 +48,15 @@ class ContentActivityImpl : FusionContentActivity() {
 	lateinit var binding: ActivityFusionImplBinding
 	override lateinit var contentBinding: ContentFragmentViewBinding
 	private lateinit var toolbarBinding: ToolbarViewBinding
-	override val fusionConfig: AndroidFusionConfig = run {
+	override val fusionConfig: AndroidFusionConfig get() {
+		val baseUrl = intent.getStringExtra(BASE_URL_EXTRA_KEY) ?: ""
 		val resolvers = ViewHelper.getDefaultViewResolvers().apply {
 			put("Card", DefaultViewResolver(Card::class.java, CardViewHolder.Factory::class.java))
 		}
-		AndroidFusionConfig(
-			populator = LegacyDisplayPopulator(resolvers.values),
+		return AndroidFusionConfig(
+			populator = RetrofitDisplayPopulator(this::lifecycleScope, baseUrl, resolvers.values),
 			actionHandler = DefaultActivityActionHandlers { view, action ->
-				getIntent(view.context, action.extractClick())
+				getIntent(view.context, baseUrl, action.extractClick())
 			}.apply {
 				registerNativeActionForLink(NATIVE_ACTION_KEY) { view, _ ->
 					view.context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
