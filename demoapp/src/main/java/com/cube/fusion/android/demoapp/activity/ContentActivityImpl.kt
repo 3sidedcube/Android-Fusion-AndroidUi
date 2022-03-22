@@ -16,6 +16,7 @@ import com.cube.fusion.android.demoapp.databinding.ActivityFusionImplBinding
 import com.cube.fusion.android.demoapp.holder.CardViewHolder
 import com.cube.fusion.android.demoapp.images.PicassoImageLoader
 import com.cube.fusion.android.demoapp.model.Card
+import com.cube.fusion.populator.coroutinesourcecache.source.AssetsPageSource
 import com.cube.fusion.populator.retrofit.RetrofitDisplayPopulator
 
 /**
@@ -53,8 +54,9 @@ class ContentActivityImpl : FusionContentActivity() {
 		val resolvers = ViewHelper.getDefaultViewResolvers().apply {
 			put("Card", DefaultViewResolver(Card::class.java, CardViewHolder.Factory::class.java))
 		}
+		val localSource = AssetsPageSource(this, { it }, resolvers.values)
 		return AndroidFusionConfig(
-			populator = RetrofitDisplayPopulator(this::lifecycleScope, baseUrl, resolvers.values),
+			populator = RetrofitDisplayPopulator(this::lifecycleScope, baseUrl, resolvers.values, localSource),
 			actionHandler = DefaultActivityActionHandlers { view, action ->
 				getIntent(view.context, baseUrl, action.extractClick())
 			}.apply {
