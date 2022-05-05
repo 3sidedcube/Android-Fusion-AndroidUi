@@ -2,17 +2,14 @@ package com.cube.fusion.android.activity.actions
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.view.View
-import com.cube.fusion.android.activity.R
 import com.cube.fusion.android.activity.WebViewActivity
+import com.cube.fusion.android.core.actions.DefaultAndroidActionHandlers
 import com.cube.fusion.android.core.actions.FusionAndroidActionHandler
 import com.cube.fusion.android.core.actions.MutableListMultiActionHandler
 import com.cube.fusion.android.core.utils.extensions.handledByView
-import com.cube.fusion.core.model.action.EmailAction
 import com.cube.fusion.core.model.action.LinkAction
 import com.cube.fusion.core.model.action.PageAction
-import com.cube.fusion.core.utils.Constants
 
 /**
  * [FusionAndroidActionHandler] implementation for the default handling of actions by redirects to activities
@@ -44,42 +41,12 @@ class DefaultActivityActionHandlers(pageIntentGenerator: (View, PageAction) -> I
 		}
 
 		/**
-		 * Get a default handler for [LinkAction]s
+		 * Get a default handler for in-app [LinkAction]s; i.e ones with [LinkAction.inApp] true
 		 * @return a [FusionAndroidActionHandler] that redirects [LinkAction]s either to [WebViewActivity] if inApp, or an external app otherwise
 		 */
-		fun defaultLinkActivityActionHandler() = FusionAndroidActionHandler { view, action ->
-			if (action is LinkAction) {
-				val intent = if (action.inApp) {
-					WebViewActivity.getIntent(view.context, action.extractClick())
-				}
-				else {
-					Intent(Intent.ACTION_VIEW).apply {
-						data = Uri.parse(action.extractClick())
-					}
-				}
-				intent.handledByView(view)
-			}
-			else false
-		}
-
-		/**
-		 * Get a default handler for [EmailAction]s
-		 * @return a [FusionAndroidActionHandler] that handles [EmailAction]s by launching an email app selector with the relevant email extras
-		 */
-		fun defaultEmailActivityActionHandler() = FusionAndroidActionHandler { view, action ->
-			if (action is EmailAction) {
-				val selectorIntent = Intent(Intent.ACTION_SENDTO).apply {
-					data = Uri.parse(Constants.MAIL_TO)
-				}
-				val emailIntent = Intent(Intent.ACTION_SEND).apply {
-					putExtra(Intent.EXTRA_EMAIL, action.to)
-					putExtra(Intent.EXTRA_BCC, action.bcc)
-					putExtra(Intent.EXTRA_CC, action.cc)
-					putExtra(Intent.EXTRA_SUBJECT, action.subject)
-					putExtra(Intent.EXTRA_TEXT, action.body)
-					selector = selectorIntent
-				}
-				Intent.createChooser(emailIntent, view.context.getString(R.string.send_email_header)).handledByView(view)
+		fun defaultInAppLinkActivityActionHandler() = FusionAndroidActionHandler { view, action ->
+			if (action is LinkAction && action.inApp) {
+				WebViewActivity.getIntent(view.context, action.extractClick()).handledByView(view)
 			}
 			else false
 		}
@@ -87,7 +54,8 @@ class DefaultActivityActionHandlers(pageIntentGenerator: (View, PageAction) -> I
 
 	override val childHandlers = mutableListOf(
 		defaultPageActivityActionHandler(pageIntentGenerator),
-		defaultLinkActivityActionHandler(),
-		defaultEmailActivityActionHandler()
+		defaultInAppLinkActivityActionHandler(),
+		DefaultAndroidActionHandlers.defaultExternalLinkActivityActionHandler(),
+		DefaultAndroidActionHandlers.defaultEmailActivityActionHandler()
 	)
 }
