@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.cube.fusion.android.demoapp.R
-import com.cube.fusion.populator.legacy.api.APIFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -16,8 +15,12 @@ import kotlinx.coroutines.launch
  */
 class MainActivity : AppCompatActivity() {
 	companion object {
-		private const val DEMO_URL = "Put your URL here!"
-		private const val START_SCREEN = "Put your starting screen slug/URL here!"
+		/*
+		 * These currently point to the locally defined demo JSON data in the most recent release of this lib
+		 * Feel free to locally update this URL and start screen to your own endpoints if you wish
+		 */
+		private const val DEMO_URL = "https://raw.githubusercontent.com/3sidedcube/Android-Fusion-AndroidUi/main/demoapp/src/main/assets/"
+		private const val START_SCREEN = "root.json"
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,11 +30,8 @@ class MainActivity : AppCompatActivity() {
 			// Display for 1 seconds
 			delay(1000)
 
-			// Set up the legacy API factory
-			APIFactory.url = DEMO_URL
-
 			// Redirect to the content activity
-			val intent = ContentActivityImpl.getIntent(baseContext, START_SCREEN)
+			val intent = ContentActivityImpl.getIntent(baseContext, DEMO_URL, START_SCREEN)
 			startActivity(intent)
 
 			// Close this activity
