@@ -33,7 +33,10 @@ class DefaultFragmentActionHandlers(fragmentManager: FragmentManager, @IdRes con
 		 */
 		fun defaultPageActivityActionHandler(fragmentManager: FragmentManager, @IdRes containerViewId: Int = R.id.fragment) = FusionAndroidActionHandler { _, action ->
 			if (action is PageAction) {
-				fragmentManager.beginTransaction().replace(containerViewId, FusionContentFragment::class.java, FusionContentFragment.getBundle(action.extractClick())).commit()
+				fragmentManager.beginTransaction()
+					.replace(containerViewId, FusionContentFragment::class.java, FusionContentFragment.getBundle(action.extractClick()))
+					.addToBackStack(null)
+					.commit()
 				true
 			}
 			else false
@@ -48,7 +51,10 @@ class DefaultFragmentActionHandlers(fragmentManager: FragmentManager, @IdRes con
 		 */
 		fun defaultInAppLinkActivityActionHandler(fragmentManager: FragmentManager, @IdRes containerViewId: Int = R.id.fragment) = FusionAndroidActionHandler { _, action ->
 			if (action is LinkAction && action.inApp) {
-				fragmentManager.beginTransaction().replace(containerViewId, WebViewFragment::class.java, WebViewFragment.getBundle(action.extractClick())).commit()
+				fragmentManager.beginTransaction()
+					.replace(containerViewId, WebViewFragment::class.java, WebViewFragment.getBundle(action.extractClick()))
+					.addToBackStack(null)
+					.commit()
 				true
 			}
 			else false
