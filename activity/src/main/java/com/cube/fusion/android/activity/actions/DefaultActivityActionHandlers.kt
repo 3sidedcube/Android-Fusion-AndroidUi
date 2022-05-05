@@ -42,7 +42,7 @@ class DefaultActivityActionHandlers(pageIntentGenerator: (View, PageAction) -> I
 
 		/**
 		 * Get a default handler for in-app [LinkAction]s; i.e ones with [LinkAction.inApp] true
-		 * @return a [FusionAndroidActionHandler] that redirects [LinkAction]s either to [WebViewActivity] if inApp, or an external app otherwise
+		 * @return a [FusionAndroidActionHandler] that redirects [LinkAction]s to [WebViewActivity] if inApp
 		 */
 		fun defaultInAppLinkActivityActionHandler() = FusionAndroidActionHandler { view, action ->
 			if (action is LinkAction && action.inApp) {
