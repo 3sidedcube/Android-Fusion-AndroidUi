@@ -7,11 +7,10 @@ import android.view.View
 import com.cube.fusion.android.activity.R
 import com.cube.fusion.android.activity.WebViewActivity
 import com.cube.fusion.android.core.actions.FusionAndroidActionHandler
-import com.cube.fusion.android.core.actions.MultiActionHandler
+import com.cube.fusion.android.core.actions.MutableListMultiActionHandler
 import com.cube.fusion.android.core.utils.extensions.handledByView
 import com.cube.fusion.core.model.action.EmailAction
 import com.cube.fusion.core.model.action.LinkAction
-import com.cube.fusion.core.model.action.NativeAction
 import com.cube.fusion.core.model.action.PageAction
 import com.cube.fusion.core.utils.Constants
 
@@ -24,7 +23,7 @@ import com.cube.fusion.core.utils.Constants
  *
  * @param pageIntentGenerator a method to generate intents for [PageAction]s to redirect to
  */
-class DefaultActivityActionHandlers(pageIntentGenerator: (View, PageAction) -> Intent?) : MultiActionHandler() {
+class DefaultActivityActionHandlers(pageIntentGenerator: (View, PageAction) -> Intent?) : MutableListMultiActionHandler() {
 	/**
 	 * @param pageClass the activity class for [PageAction]s to redirect to
 	 */
@@ -91,33 +90,4 @@ class DefaultActivityActionHandlers(pageIntentGenerator: (View, PageAction) -> I
 		defaultLinkActivityActionHandler(),
 		defaultEmailActivityActionHandler()
 	)
-
-	/**
-	 * Register a new handler for [NativeAction]s
-	 *
-	 * @param handler the handling method to call for any native action.
-	 * 	Should return true if the action is successfully handled, and false otherwise.
-	 */
-	fun registerNativeAction(handler: (View, NativeAction) -> Boolean) {
-		childHandlers.add(FusionAndroidActionHandler { view, action ->
-			if (action is NativeAction) {
-				handler(view, action)
-			}
-			else false
-		})
-	}
-
-	/**
-	 * Register a new handler for [NativeAction]s with a specific link, which returns true and calls [onLinkMatch] whenever the action link exactly matches [link]
-	 *
-	 * @param link the exact link to handle
-	 * @param onLinkMatch the method to call whenever a [NativeAction] with the given link is handled
-	 */
-	fun registerNativeActionForLink(link: String, onLinkMatch: (View, NativeAction) -> Unit) = registerNativeAction { view, nativeAction ->
-		if (nativeAction.link == link) {
-			onLinkMatch(view, nativeAction)
-			true
-		}
-		else false
-	}
 }
