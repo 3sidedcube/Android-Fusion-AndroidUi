@@ -17,6 +17,23 @@
 					"size": 22
 				},
 				"text_alignment": "center"
+			},
+			{
+				"class": "Card",
+				"title": "Here is a card view",
+				"subtitle": "To demonstrate custom views!",
+				"margin": {
+					"left": 5,
+					"right": 5,
+					"top": 5,
+					"bottom": 5
+				},
+				"padding": {
+					"left": 5,
+					"right": 5,
+					"top": 5,
+					"bottom": 5
+				}
 			}
 		]
 	}
