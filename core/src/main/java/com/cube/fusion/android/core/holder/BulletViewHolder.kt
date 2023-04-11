@@ -11,7 +11,6 @@ import com.cube.fusion.android.core.databinding.BulletViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
 import com.cube.fusion.core.model.views.Bullet
-import com.cube.fusion.core.model.views.Text
 
 /**
  * [FusionViewHolder] implementation to represent the [Bullet] view
@@ -20,8 +19,8 @@ import com.cube.fusion.core.model.views.Text
  * Copyright ® 3SidedCube. All rights reserved.
  */
 class BulletViewHolder(val binding: BulletViewBinding) : FusionViewHolder<Bullet>(binding.root) {
-	private val titleViewHolder = TextViewHolder<Text>(binding.title)
-	private val subtitleViewHolder = TextViewHolder<Text>(binding.subtitle)
+	private val titleViewHolder = TextViewHolder(binding.title)
+	private val subtitleViewHolder = TextViewHolder(binding.subtitle)
 	private val delegate = BulletAccessibilityDelegateCompat(null)
 
 	init {
