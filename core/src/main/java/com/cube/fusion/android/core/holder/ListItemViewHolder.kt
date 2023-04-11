@@ -61,7 +61,7 @@ class ListItemViewHolder(private val binding: ListItemViewBinding) : FusionViewH
 		)
 
 		//Apply padding
-		binding.listItemContainer.setPadding(model.padding)
+		binding.listItemContainer.setPadding(model.baseProperties.padding)
 
 		binding.cardContainer.setOnClickListener {
 			actionHandler?.handleAction(it, model.action)

@@ -40,10 +40,10 @@ class ImageViewHolder(private val binding: ImageViewBinding) : ChildViewHolder<I
 			imageLoader?.loadImage(image, this)
 
 			//Apply padding
-			setPadding(image?.padding)
+			setPadding(image?.baseProperties?.padding)
 
 			//Apply corner radius to inner image as well
-			val cornerRadius = image?.cornerRadius?.let {
+			val cornerRadius = image?.baseProperties?.cornerRadius?.let {
 				resources.dpToPx(it)
 			} ?: resources.getDimension(R.dimen.fusion_default_image_view_corner_radius)
 			val appearanceModel = shapeAppearanceModel.withCornerSize(cornerRadius)

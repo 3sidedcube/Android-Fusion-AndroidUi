@@ -91,7 +91,7 @@ open class TextViewHolder<T : Text>(protected val binding: TextViewBinding) : Ch
 			letterSpacing = textModel?.letterSpacing ?: resources.getDimenOrEms(defaultLetterSpacing)
 
 			//Apply padding
-			setPadding(textModel?.padding)
+			setPadding(textModel?.baseProperties?.padding)
 		}
 
 		populateBaseView(

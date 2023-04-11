@@ -71,6 +71,6 @@ class BulletGroupViewHolder(val binding: BulletGroupViewBinding) :
 		)
 
 		//Apply padding
-		binding.bulletGroupContainer.setPadding(model.padding)
+		binding.bulletGroupContainer.setPadding(model.baseProperties.padding)
 	}
 }

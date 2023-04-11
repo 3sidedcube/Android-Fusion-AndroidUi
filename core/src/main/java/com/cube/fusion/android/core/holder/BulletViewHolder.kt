@@ -66,6 +66,6 @@ class BulletViewHolder(val binding: BulletViewBinding) : FusionViewHolder<Bullet
 		)
 
 		//Apply padding
-		binding.bulletViewContainer.setPadding(model.padding)
+		binding.bulletViewContainer.setPadding(model.baseProperties.padding)
 	}
 }
