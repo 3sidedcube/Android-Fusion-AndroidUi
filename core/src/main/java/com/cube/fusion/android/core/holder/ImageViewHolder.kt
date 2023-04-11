@@ -52,7 +52,7 @@ class ImageViewHolder(private val binding: ImageViewBinding) : ChildViewHolder<I
 
 		populateBaseView(
 			binding.imageContainer,
-			image,
+			image?.baseProperties,
 			defaultBgColour,
 			R.dimen.fusion_default_image_view_corner_radius
 		)

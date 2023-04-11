@@ -25,12 +25,12 @@ class ButtonViewHolder(binding: TextViewBinding) : TextViewHolder<Button>(bindin
 	}
 
 	override fun populateView(model: Button) {
-		populateView(model, R.color.fusion_default_button_view_background_colour, R.dimen.fusion_default_button_view_corner_radius, R.dimen.fusion_default_button_view_text_size, R.color.fusion_default_button_view_text_colour, R.dimen.fusion_default_button_view_letter_spacing, Gravity.CENTER)
+		populateView(model.baseProperties, R.color.fusion_default_button_view_background_colour, R.dimen.fusion_default_button_view_corner_radius, R.dimen.fusion_default_button_view_text_size, R.color.fusion_default_button_view_text_colour, R.dimen.fusion_default_button_view_letter_spacing, Gravity.CENTER)
 		populateClickHandler(model)
 	}
 
 	override fun populateChildView(model: Button?) {
-		populateView(model, android.R.color.transparent, R.dimen.fusion_default_button_view_corner_radius, R.dimen.fusion_default_button_view_text_size, R.color.fusion_default_button_view_text_colour, R.dimen.fusion_default_button_view_letter_spacing, Gravity.CENTER)
+		populateView(model?.baseProperties, android.R.color.transparent, R.dimen.fusion_default_button_view_corner_radius, R.dimen.fusion_default_button_view_text_size, R.color.fusion_default_button_view_text_colour, R.dimen.fusion_default_button_view_letter_spacing, Gravity.CENTER)
 		populateClickHandler(model)
 	}
 

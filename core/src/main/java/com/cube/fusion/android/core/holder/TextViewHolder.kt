@@ -96,7 +96,7 @@ open class TextViewHolder<T : Text>(protected val binding: TextViewBinding) : Ch
 
 		populateBaseView(
 			binding.textContainer,
-			textModel,
+			textModel?.baseProperties,
 			defaultBgColour,
 			defaultCornerRadius
 		)

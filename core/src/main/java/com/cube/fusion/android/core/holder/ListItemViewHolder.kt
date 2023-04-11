@@ -55,7 +55,7 @@ class ListItemViewHolder(private val binding: ListItemViewBinding) : FusionViewH
 
 		populateBaseView(
 			binding.cardContainer,
-			model,
+			model.baseProperties,
 			R.color.fusion_default_list_item_view_background_colour,
 			R.dimen.fusion_default_list_item_view_corner_radius
 		)

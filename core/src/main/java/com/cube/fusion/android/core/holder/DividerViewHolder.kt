@@ -42,7 +42,7 @@ class DividerViewHolder(private val binding: DividerViewBinding) : FusionViewHol
 
 		populateBaseView(
 			binding.divider,
-			model,
+			model.baseProperties,
 			R.color.fusion_default_divider_view_background_colour,
 			R.dimen.fusion_default_divider_view_corner_radius
 		)

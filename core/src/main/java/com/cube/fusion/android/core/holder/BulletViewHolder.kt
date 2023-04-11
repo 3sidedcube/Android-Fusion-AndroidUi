@@ -60,7 +60,7 @@ class BulletViewHolder(val binding: BulletViewBinding) : FusionViewHolder<Bullet
 
 		populateBaseView(
 			binding.cardContainer,
-			model,
+			model.baseProperties,
 			R.color.fusion_default_bullet_view_background_colour,
 			R.dimen.fusion_default_bullet_view_corner_radius
 		)
