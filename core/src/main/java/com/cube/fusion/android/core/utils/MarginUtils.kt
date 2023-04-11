@@ -22,12 +22,12 @@ object MarginUtils {
 	 * @param resources the app's current resources
 	 * @return the default instance of [Margin]
 	 */
-	fun Margin.Companion.default(resources: Resources) = Margin().apply {
-		left = resources.getDimensionInDP(R.dimen.fusion_default_margin_left)
-		top = resources.getDimensionInDP(R.dimen.fusion_default_margin_top)
-		right = resources.getDimensionInDP(R.dimen.fusion_default_margin_right)
+	fun Margin.Companion.default(resources: Resources) = Margin(
+		left = resources.getDimensionInDP(R.dimen.fusion_default_margin_left),
+		top = resources.getDimensionInDP(R.dimen.fusion_default_margin_top),
+		right = resources.getDimensionInDP(R.dimen.fusion_default_margin_right),
 		bottom = resources.getDimensionInDP(R.dimen.fusion_default_margin_bottom)
-	}
+	)
 
 	/**
 	 * Convenience method to get either [this] if [this] is non-null, or [default] if [this] is null

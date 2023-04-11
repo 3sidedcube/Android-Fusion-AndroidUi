@@ -22,12 +22,12 @@ object PaddingUtils {
 	 * @param resources the app's current resources
 	 * @return the default instance of [Padding]
 	 */
-	fun Padding.Companion.default(resources: Resources) = Padding().apply {
-		left = resources.getDimensionInDP(R.dimen.fusion_default_padding_left)
-		top = resources.getDimensionInDP(R.dimen.fusion_default_padding_top)
-		right = resources.getDimensionInDP(R.dimen.fusion_default_padding_right)
+	fun Padding.Companion.default(resources: Resources) = Padding(
+		left = resources.getDimensionInDP(R.dimen.fusion_default_padding_left),
+		top = resources.getDimensionInDP(R.dimen.fusion_default_padding_top),
+		right = resources.getDimensionInDP(R.dimen.fusion_default_padding_right),
 		bottom = resources.getDimensionInDP(R.dimen.fusion_default_padding_bottom)
-	}
+	)
 
 	/**
 	 * Converts a DP value to padding pixels
