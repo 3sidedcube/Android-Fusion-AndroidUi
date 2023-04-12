@@ -10,7 +10,6 @@ import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.images.FusionAndroidImageLoader
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
 import com.cube.fusion.core.model.views.ListItem
-import com.cube.fusion.core.model.views.Text
 
 /**
  * [FusionViewHolder] implementation to represent the [ListItem] view
@@ -25,8 +24,8 @@ class ListItemViewHolder(private val binding: ListItemViewBinding) : FusionViewH
 			field = value
 			imageViewHolder.imageLoader = value
 		}
-	private val titleViewHolder = TextViewHolder<Text>(binding.title)
-	private val subtitleViewHolder = TextViewHolder<Text>(binding.subtitle)
+	private val titleViewHolder = TextViewHolder(binding.title)
+	private val subtitleViewHolder = TextViewHolder(binding.subtitle)
 	private val imageViewHolder = ImageViewHolder(binding.listItemImage).apply {
 		imageLoader = this@ListItemViewHolder.imageLoader
 	}
@@ -55,13 +54,13 @@ class ListItemViewHolder(private val binding: ListItemViewBinding) : FusionViewH
 
 		populateBaseView(
 			binding.cardContainer,
-			model,
+			model.baseProperties,
 			R.color.fusion_default_list_item_view_background_colour,
 			R.dimen.fusion_default_list_item_view_corner_radius
 		)
 
 		//Apply padding
-		binding.listItemContainer.setPadding(model.padding)
+		binding.listItemContainer.setPadding(model.baseProperties.padding)
 
 		binding.cardContainer.setOnClickListener {
 			actionHandler?.handleAction(it, model.action)

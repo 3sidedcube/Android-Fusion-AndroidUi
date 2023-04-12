@@ -2,6 +2,9 @@ package com.cube.fusion.android.demoapp.model
 
 import com.cube.fusion.core.model.ImageSource
 import com.cube.fusion.core.model.Model
+import com.cube.fusion.core.model.views.BaseViewProperties
+import com.fasterxml.jackson.annotation.JsonUnwrapped
+import kotlinx.parcelize.Parcelize
 
 /**
  * Example custom view [Model] for a card with title, subtitle and image
@@ -14,9 +17,11 @@ import com.cube.fusion.core.model.Model
  * @property subtitle the subtitle of the card
  * @property image the image to display for the card
  */
-class Card : Model() {
-	val title: String? = null
-	val subtitle: String? = null
-	val type: String? = null
-	val image: ImageSource? = null
-}
+@Parcelize
+data class Card(
+	val title: String? = null,
+	val subtitle: String? = null,
+	val type: String? = null,
+	val image: ImageSource? = null,
+	@field:JsonUnwrapped val baseProperties: BaseViewProperties = BaseViewProperties()
+): Model()

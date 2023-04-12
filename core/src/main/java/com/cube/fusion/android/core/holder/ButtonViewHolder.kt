@@ -15,7 +15,7 @@ import com.cube.fusion.core.model.views.Button
  * Created by Nikos Rapousis on 12/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
-class ButtonViewHolder(binding: TextViewBinding) : TextViewHolder<Button>(binding), ActionHandlingViewHolder {
+class ButtonViewHolder(val binding: TextViewBinding) : ChildViewHolder<Button>(binding.root), ActionHandlingViewHolder {
 	override var actionHandler: FusionAndroidActionHandler? = null
 	class Factory : FusionViewHolderFactory {
 		override fun createViewHolder(parent: ViewGroup): ButtonViewHolder {
@@ -25,12 +25,38 @@ class ButtonViewHolder(binding: TextViewBinding) : TextViewHolder<Button>(bindin
 	}
 
 	override fun populateView(model: Button) {
-		populateView(model, R.color.fusion_default_button_view_background_colour, R.dimen.fusion_default_button_view_corner_radius, R.dimen.fusion_default_button_view_text_size, R.color.fusion_default_button_view_text_colour, R.dimen.fusion_default_button_view_letter_spacing, Gravity.CENTER)
+		TextViewHolder.populateView(
+			textView = binding.text,
+			textModel = model.baseProperties,
+			defaultTextSize = R.dimen.fusion_default_button_view_text_size,
+			defaultTextColour = R.color.fusion_default_button_view_text_colour,
+			defaultLetterSpacing = R.dimen.fusion_default_button_view_letter_spacing,
+			defaultGravity = Gravity.CENTER
+		)
+		populateBaseView(
+			cardView = binding.textContainer,
+			baseProperties = model.baseProperties.baseProperties,
+			defaultBackgroundColourResId = R.color.fusion_default_button_view_background_colour,
+			defaultCornerRadiusResId = R.dimen.fusion_default_button_view_corner_radius
+		)
 		populateClickHandler(model)
 	}
 
 	override fun populateChildView(model: Button?) {
-		populateView(model, android.R.color.transparent, R.dimen.fusion_default_button_view_corner_radius, R.dimen.fusion_default_button_view_text_size, R.color.fusion_default_button_view_text_colour, R.dimen.fusion_default_button_view_letter_spacing, Gravity.CENTER)
+		TextViewHolder.populateView(
+			textView = binding.text,
+			textModel = model?.baseProperties,
+			defaultTextSize = R.dimen.fusion_default_button_view_text_size,
+			defaultTextColour = R.color.fusion_default_button_view_text_colour,
+			defaultLetterSpacing = R.dimen.fusion_default_button_view_letter_spacing,
+			defaultGravity = Gravity.CENTER
+		)
+		populateBaseView(
+			cardView = binding.textContainer,
+			baseProperties = model?.baseProperties?.baseProperties,
+			defaultBackgroundColourResId = android.R.color.transparent,
+			defaultCornerRadiusResId = R.dimen.fusion_default_button_view_corner_radius
+		)
 		populateClickHandler(model)
 	}
 

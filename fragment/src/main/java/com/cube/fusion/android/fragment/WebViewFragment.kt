@@ -33,4 +33,9 @@ class WebViewFragment : Fragment() {
 		binding = WebViewBinding.inflate(inflater, container, false)
 		return binding?.root
 	}
+
+	override fun onDestroyView() {
+		super.onDestroyView()
+		binding = null
+	}
 }
