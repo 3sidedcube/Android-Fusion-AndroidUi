@@ -1,6 +1,7 @@
 plugins {
 	id 'com.android.application'
 	id 'kotlin-android'
+	id 'kotlin-parcelize'
 }
 
 android {
@@ -51,10 +52,13 @@ dependencies {
 	implementation "com.github.3sidedcube.Android-Fusion-Core:populator-retrofit:${project.fusionLibVersion}"
 
 	// Same-repo Fusion dependencies
-	def currentLibVersion = "v0.0.2-rc2"
+	def currentLibVersion = "v0.0.3"
 	implementation "com.github.3sidedcube.Android-Fusion-AndroidUi:core:$currentLibVersion"
 	implementation "com.github.3sidedcube.Android-Fusion-AndroidUi:activity:$currentLibVersion"
 
 	// Image loading/populating
 	implementation 'com.squareup.picasso:picasso:2.71828'
+
+	// Parsing of JSON data with Jackson
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.1'
 }

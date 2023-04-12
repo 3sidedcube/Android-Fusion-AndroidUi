@@ -18,6 +18,7 @@ import com.cube.fusion.android.core.utils.shadow.ShadowBasicInset
 import com.cube.fusion.android.core.utils.shadow.ShadowRectSpec
 import com.cube.fusion.core.model.Margin
 import com.cube.fusion.core.model.Model
+import com.cube.fusion.core.model.views.BaseViewProperties
 import com.google.android.material.card.MaterialCardView
 import kotlin.math.ceil
 import kotlin.math.roundToInt
@@ -61,13 +62,13 @@ abstract class FusionViewHolder<T : Model>(itemView: View) : RecyclerView.ViewHo
 	 * Padding should therefore be handled separately in the [populateView] method
 	 *
 	 * @param cardView the base [MaterialCardView] that the view is built upon
-	 * @param model the model to populate the base UI with, or null - if null, uses all defaults
+	 * @param baseProperties the base view properties to populate the base UI with, or null - if null, uses all defaults
 	 * @param defaultBackgroundColourResId the resource ID for the default background colour of this view
 	 * @param defaultCornerRadiusResId the resource ID for the default corner radius of this view
 	 */
 	protected fun populateBaseView(
 		cardView: MaterialCardView,
-		model: Model?,
+		baseProperties: BaseViewProperties?,
 		@ColorRes defaultBackgroundColourResId: Int,
 		@DimenRes defaultCornerRadiusResId: Int
 	) {
@@ -75,7 +76,7 @@ abstract class FusionViewHolder<T : Model>(itemView: View) : RecyclerView.ViewHo
 		val resources = cardView.resources
 
 		// Background colour
-		val bgColour = model?.backgroundColor?.let {
+		val bgColour = baseProperties?.backgroundColor?.let {
 			try {
 				ColourHelper.parseColour(it)
 			}
@@ -86,13 +87,13 @@ abstract class FusionViewHolder<T : Model>(itemView: View) : RecyclerView.ViewHo
 		cardView.setCardBackgroundColor(bgColour)
 
 		// Corner radius
-		val cornerRadius = model?.cornerRadius?.let {
+		val cornerRadius = baseProperties?.cornerRadius?.let {
 			resources.dpToPx(it)
 		} ?: resources.getDimension(defaultCornerRadiusResId)
 		cardView.radius = cornerRadius
 
 		// Margin
-		val marginOrDefault = model?.margin.orDefault(resources)
+		val marginOrDefault = baseProperties?.margin.orDefault(resources)
 		cardView.updateLayoutParams {
 			(this as? ViewGroup.MarginLayoutParams)?.setMargin(marginOrDefault, resources)
 		}
@@ -100,7 +101,7 @@ abstract class FusionViewHolder<T : Model>(itemView: View) : RecyclerView.ViewHo
 		// Border
 		@Px val borderWidth: Int
 		@ColorInt val borderColour: Int
-		val border = model?.border
+		val border = baseProperties?.border
 		if (border != null) {
 			borderWidth = ceil(resources.dpToPx(border.strokeWidth)).roundToInt()
 			borderColour = try {
@@ -118,7 +119,7 @@ abstract class FusionViewHolder<T : Model>(itemView: View) : RecyclerView.ViewHo
 		cardView.strokeColor = borderColour
 
 		// Shadow
-		shadowRectSpec = model?.shadow?.let {
+		shadowRectSpec = baseProperties?.shadow?.let {
 			val shadowColour = try {
 				ColourHelper.parseColour(it.color)
 			}

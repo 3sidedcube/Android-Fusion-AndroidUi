@@ -40,12 +40,12 @@ class CardViewHolder(private val binding: CardViewBinding) : FusionViewHolder<Ca
 		}
 
 		//Padding
-		binding.cardViewLinearLayout.setPadding(model.padding)
+		binding.cardViewLinearLayout.setPadding(model.baseProperties.padding)
 
 		//Base properties
 		populateBaseView(
 			binding.root,
-			model,
+			model.baseProperties,
 			android.R.color.transparent,
 			R.dimen.card_view_default_corner_radius
 		)

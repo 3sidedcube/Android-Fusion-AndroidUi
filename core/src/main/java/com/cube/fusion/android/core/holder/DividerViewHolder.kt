@@ -35,14 +35,14 @@ class DividerViewHolder(private val binding: DividerViewBinding) : FusionViewHol
 		val height = model.strokeWidth?.let {
 			itemView.resources.dpToPx(it)
 		} ?: itemView.resources.getDimension(R.dimen.fusion_default_divider_height)
-		val verticalPadding = model.padding?.let {
+		val verticalPadding = model.baseProperties.padding?.let {
 			itemView.resources.dpToPx(it.top + it.bottom)
 		} ?: itemView.resources.let { it.getDimension(R.dimen.fusion_default_padding_top) + it.getDimension(R.dimen.fusion_default_padding_bottom) }
 		binding.divider.layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, ceil(height + verticalPadding).roundToInt())
 
 		populateBaseView(
 			binding.divider,
-			model,
+			model.baseProperties,
 			R.color.fusion_default_divider_view_background_colour,
 			R.dimen.fusion_default_divider_view_corner_radius
 		)

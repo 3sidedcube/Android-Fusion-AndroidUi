@@ -65,12 +65,12 @@ class BulletGroupViewHolder(val binding: BulletGroupViewBinding) :
 
 		populateBaseView(
 			binding.root,
-			model,
+			model.baseProperties,
 			R.color.fusion_default_bullet_group_view_background_colour,
 			R.dimen.fusion_default_bullet_group_view_corner_radius
 		)
 
 		//Apply padding
-		binding.bulletGroupContainer.setPadding(model.padding)
+		binding.bulletGroupContainer.setPadding(model.baseProperties.padding)
 	}
 }
