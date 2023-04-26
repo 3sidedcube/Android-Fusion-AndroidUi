@@ -49,7 +49,23 @@ abstract class FusionViewHolder<T : Model>(itemView: View) : RecyclerView.ViewHo
 	override var shadowRectSpec: List<ShadowRectSpec>? = null
 		protected set
 
+	/**
+	 * Current list of child [FusionViewHolder] references
+	 */
+	private val childViewHolders: MutableList<FusionViewHolder<*>> = mutableListOf()
+
 	var extensionHandlers: List<ExtensionHandler> = emptyList()
+		set(value) {
+			field = value
+			childViewHolders.forEach {
+				it.extensionHandlers = value
+			}
+		}
+
+	protected fun childViewHolder(holder: FusionViewHolder<*>) {
+		childViewHolders.add(holder)
+		holder.extensionHandlers = extensionHandlers
+	}
 
 	/**
 	 * Convenience method to populate a base [MaterialCardView] instance with general properties of a [Model]
