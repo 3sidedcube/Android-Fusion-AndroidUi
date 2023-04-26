@@ -33,7 +33,8 @@ class LegacyContentActivity : AppCompatActivity() {
 		populator = LegacyDisplayPopulator(ViewHelper.getDefaultViewResolvers().values),
 		actionHandler = DefaultActivityActionHandlers(LegacyContentActivity::class.java),
 		imageLoader = ImageLoadingManager.imageLoader,
-		resolvers = ViewHelper.getDefaultViewResolvers()
+		resolvers = ViewHelper.getDefaultViewResolvers(),
+		extensionHandlers = emptyList()
 	)
 	private val fragmentFactory = FusionContentFragmentFactory(fusionConfig)
 	override fun onCreate(savedInstanceState: Bundle?) {

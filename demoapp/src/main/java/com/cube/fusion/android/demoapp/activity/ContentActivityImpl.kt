@@ -16,8 +16,9 @@ import com.cube.fusion.android.demoapp.databinding.ActivityFusionImplBinding
 import com.cube.fusion.android.demoapp.holder.CardViewHolder
 import com.cube.fusion.android.demoapp.images.PicassoImageLoader
 import com.cube.fusion.android.demoapp.model.Card
+import com.cube.fusion.android.demoapp.model.extensions.LocalisationExtension
+import com.cube.fusion.populator.coroutinesourcecache.CoroutineSourceCachePopulator
 import com.cube.fusion.populator.coroutinesourcecache.source.AssetsPageSource
-import com.cube.fusion.populator.retrofit.RetrofitDisplayPopulator
 
 /**
  * Content Activity implementation for the demo of Fusion AndroidUi
@@ -53,10 +54,11 @@ class ContentActivityImpl : FusionContentActivity() {
 		val baseUrl = intent.getStringExtra(BASE_URL_EXTRA_KEY) ?: ""
 		val resolvers = ViewHelper.getDefaultViewResolvers().apply {
 			put("Card", DefaultViewResolver(Card::class.java, CardViewHolder.Factory::class.java))
+			put("LocalisationExtension", DefaultViewResolver(LocalisationExtension::class.java, null))
 		}
 		val localSource = AssetsPageSource(this, { it }, resolvers.values)
 		return AndroidFusionConfig(
-			populator = RetrofitDisplayPopulator(this::lifecycleScope, baseUrl, resolvers.values, localSource),
+			populator = CoroutineSourceCachePopulator(this::lifecycleScope, localSource),
 			actionHandler = DefaultActivityActionHandlers { view, action ->
 				getIntent(view.context, baseUrl, action.extractClick())
 			}.apply {
@@ -97,5 +99,9 @@ class ContentActivityImpl : FusionContentActivity() {
 	private fun setUpSubBindings() {
 		contentBinding = ContentFragmentViewBinding.bind(binding.pageContent)
 		toolbarBinding = ToolbarViewBinding.bind(binding.toolbar)
+	}
+
+	override fun displayError(throwable: Throwable?) {
+		super.displayError(throwable)
 	}
 }

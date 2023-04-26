@@ -3,6 +3,7 @@ package com.cube.fusion.android.demoapp.model
 import com.cube.fusion.core.model.ImageSource
 import com.cube.fusion.core.model.Model
 import com.cube.fusion.core.model.views.BaseViewProperties
+import com.cube.fusion.core.model.views.Text
 import com.fasterxml.jackson.annotation.JsonUnwrapped
 import kotlinx.parcelize.Parcelize
 
@@ -19,8 +20,8 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Card(
-	val title: String? = null,
-	val subtitle: String? = null,
+	val title: Text? = null,
+	val subtitle: Text? = null,
 	val type: String? = null,
 	val image: ImageSource? = null,
 	@field:JsonUnwrapped val baseProperties: BaseViewProperties = BaseViewProperties()

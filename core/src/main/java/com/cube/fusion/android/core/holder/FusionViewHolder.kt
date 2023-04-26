@@ -9,6 +9,7 @@ import androidx.annotation.Px
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.cube.fusion.android.core.R
+import com.cube.fusion.android.core.extensions.ExtensionHandler
 import com.cube.fusion.android.core.helper.ColourHelper
 import com.cube.fusion.android.core.helper.ShadowHelper
 import com.cube.fusion.android.core.utils.MarginUtils.orDefault
@@ -47,6 +48,8 @@ abstract class FusionViewHolder<T : Model>(itemView: View) : RecyclerView.ViewHo
 
 	override var shadowRectSpec: List<ShadowRectSpec>? = null
 		protected set
+
+	var extensionHandlers: List<ExtensionHandler> = emptyList()
 
 	/**
 	 * Convenience method to populate a base [MaterialCardView] instance with general properties of a [Model]
@@ -142,5 +145,7 @@ abstract class FusionViewHolder<T : Model>(itemView: View) : RecyclerView.ViewHo
 				shadowInset
 			)
 		}
+
+		extensionHandlers.forEach { it.handleExtension(this, baseProperties?.extensions) }
 	}
 }

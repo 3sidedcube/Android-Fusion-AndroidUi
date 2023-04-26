@@ -1,6 +1,7 @@
 package com.cube.fusion.android.core.config
 
 import com.cube.fusion.android.core.actions.FusionAndroidActionHandler
+import com.cube.fusion.android.core.extensions.ExtensionHandler
 import com.cube.fusion.android.core.images.FusionAndroidImageLoader
 import com.cube.fusion.android.core.resolver.AndroidViewResolver
 import com.cube.fusion.core.display.FusionDisplayPopulator
@@ -20,5 +21,6 @@ open class AndroidFusionConfig(
 	val populator: FusionDisplayPopulator,
 	val actionHandler: FusionAndroidActionHandler,
 	val imageLoader: FusionAndroidImageLoader?,
-	val resolvers: MutableMap<String, AndroidViewResolver>
+	val resolvers: MutableMap<String, AndroidViewResolver>,
+	val extensionHandlers: List<ExtensionHandler>
 )

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cube.fusion.android.core.actions.FusionAndroidActionHandler
 import com.cube.fusion.android.core.config.AndroidFusionConfig
+import com.cube.fusion.android.core.extensions.ExtensionHandler
 import com.cube.fusion.android.core.holder.ActionHandlingViewHolder
 import com.cube.fusion.android.core.holder.FusionViewHolder
 import com.cube.fusion.android.core.holder.ImageLoadingViewHolder
@@ -39,10 +40,11 @@ import kotlinx.parcelize.RawValue
 class FusionViewAdapter(
 	private val actionHandler: FusionAndroidActionHandler,
 	private val imageLoader: FusionAndroidImageLoader?,
-	private val resolvers: Map<String, AndroidViewResolver>
+	private val resolvers: Map<String, AndroidViewResolver>,
+	private val extensionHandlers: List<ExtensionHandler>
 ) : RecyclerView.Adapter<FusionViewHolder<*>>() {
 
-	constructor(androidConfig: AndroidFusionConfig): this(androidConfig.actionHandler, androidConfig.imageLoader, androidConfig.resolvers)
+	constructor(androidConfig: AndroidFusionConfig): this(androidConfig.actionHandler, androidConfig.imageLoader, androidConfig.resolvers, androidConfig.extensionHandlers)
 
 	/**
 	 * Temporary store for adapter state
@@ -166,6 +168,7 @@ class FusionViewAdapter(
 	override fun onBindViewHolder(viewHolder: FusionViewHolder<*>, position: Int) {
 		(viewHolder as? ActionHandlingViewHolder)?.actionHandler = actionHandler
 		(viewHolder as? ImageLoadingViewHolder)?.imageLoader = imageLoader
+		viewHolder.extensionHandlers = extensionHandlers
 		try {
 			viewHolder.populateViewFromModel(getItem(position))
 		}

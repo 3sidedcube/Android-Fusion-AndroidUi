@@ -20,8 +20,18 @@
 			},
 			{
 				"class": "Card",
-				"title": "Here is a card view",
-				"subtitle": "To demonstrate custom views!",
+				"title": {
+					"class": "Text",
+					"content": "Here is a card view"
+				},
+				"subtitle": {
+					"class": "Text",
+					"content": "To demonstrate custom views!",
+					"extensions": {
+						"class": "LocalisationExtension",
+						"localised_text": "To demonstrate extensions localising subtitle text!"
+					}
+				},
 				"margin": {
 					"left": 5,
 					"right": 5,

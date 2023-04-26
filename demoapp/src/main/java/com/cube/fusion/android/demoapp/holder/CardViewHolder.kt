@@ -1,9 +1,13 @@
 package com.cube.fusion.android.demoapp.holder
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import com.cube.fusion.android.core.databinding.TextViewBinding
+import com.cube.fusion.android.core.holder.ChildViewHolder
 import com.cube.fusion.android.core.holder.FusionViewHolder
+import com.cube.fusion.android.core.holder.TextViewHolder
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
 import com.cube.fusion.android.demoapp.R
@@ -26,13 +30,18 @@ class CardViewHolder(private val binding: CardViewBinding) : FusionViewHolder<Ca
 		}
 	}
 
+	private val titleViewHolder = TextViewHolder(TextViewBinding.bind(binding.title as View))
+	private val subtitleViewHolder = TextViewHolder(TextViewBinding.bind(binding.subtitle as View))
+
+	init {
+		binding.root.registerChildViewHolder(titleViewHolder)
+		binding.root.registerChildViewHolder(subtitleViewHolder)
+	}
+
 	override fun populateView(model: Card) {
 		//Custom properties
-		binding.title.isVisible = model.title != null
-		binding.title.text = model.title ?: ""
-
-		binding.subtitle.isVisible = model.subtitle != null
-		binding.subtitle.text = model.subtitle ?: ""
+		titleViewHolder.populateChildView(model.title)
+		subtitleViewHolder.populateChildView(model.subtitle)
 
 		binding.image.isVisible = model.image?.url != null
 		model.image?.url?.let {
