@@ -62,9 +62,10 @@ abstract class FusionViewHolder<T : Model>(itemView: View) : RecyclerView.ViewHo
 			}
 		}
 
-	protected fun childViewHolder(holder: FusionViewHolder<*>) {
+	protected fun <T: FusionViewHolder<U>, U: Model> childViewHolder(holder: T): T {
 		childViewHolders.add(holder)
 		holder.extensionHandlers = extensionHandlers
+		return holder
 	}
 
 	/**
