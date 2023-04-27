@@ -161,6 +161,7 @@ class FusionViewAdapter(
 	}
 
 	override fun onBindViewHolder(viewHolder: FusionViewHolder<*>, position: Int) {
+		viewHolder.viewConfig = viewConfig
 		(viewHolder as? ActionHandlingViewHolder)?.actionHandler = viewConfig.actionHandler
 		(viewHolder as? ImageLoadingViewHolder)?.imageLoader = viewConfig.imageLoader
 		try {
