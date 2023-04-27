@@ -1,6 +1,7 @@
 package com.cube.fusion.android.core.holder
 
 import android.view.View
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.core.model.Model
 
 /**
@@ -9,7 +10,7 @@ import com.cube.fusion.core.model.Model
  * Created by JR Mitchell on 09/November/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
-abstract class ChildViewHolder<T : Model>(itemView: View) : FusionViewHolder<T>(itemView) {
+abstract class ChildViewHolder<T : Model>(itemView: View, viewConfig: AndroidFusionViewConfig) : FusionViewHolder<T>(itemView, viewConfig) {
 	/**
 	 * Updates the UI of the view based on a nullable [model] of type [T]
 	 * Should behave as similarly to [populateView] as possible, however, there may be cases (such as with background colour) where behaviour should differ

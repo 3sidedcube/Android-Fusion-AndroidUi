@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager
 import com.cube.fusion.android.activity.actions.DefaultActivityActionHandlers
 import com.cube.fusion.android.core.databinding.ContentActivityViewBinding
 import com.cube.fusion.android.core.config.AndroidFusionConfig
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.helper.ViewHelper
 import com.cube.fusion.android.core.images.ImageLoadingManager
 import com.cube.fusion.android.fragment.FusionContentFragment
@@ -31,9 +32,11 @@ class LegacyContentActivity : AppCompatActivity() {
 	private lateinit var binding: ContentActivityViewBinding
 	private val fusionConfig = AndroidFusionConfig(
 		populator = LegacyDisplayPopulator(ViewHelper.getDefaultViewResolvers().values),
-		actionHandler = DefaultActivityActionHandlers(LegacyContentActivity::class.java),
-		imageLoader = ImageLoadingManager.imageLoader,
-		resolvers = ViewHelper.getDefaultViewResolvers()
+		resolvers = ViewHelper.getDefaultViewResolvers(),
+		viewConfig = AndroidFusionViewConfig(
+			actionHandler = DefaultActivityActionHandlers(LegacyContentActivity::class.java),
+			imageLoader = ImageLoadingManager.imageLoader,
+		)
 	)
 	private val fragmentFactory = FusionContentFragmentFactory(fusionConfig)
 	override fun onCreate(savedInstanceState: Bundle?) {

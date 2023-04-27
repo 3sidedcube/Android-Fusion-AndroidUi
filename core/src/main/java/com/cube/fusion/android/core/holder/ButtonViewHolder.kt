@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.cube.fusion.android.core.R
 import com.cube.fusion.android.core.actions.FusionAndroidActionHandler
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.TextViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.core.model.views.Button
@@ -15,12 +16,12 @@ import com.cube.fusion.core.model.views.Button
  * Created by Nikos Rapousis on 12/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
-class ButtonViewHolder(val binding: TextViewBinding) : ChildViewHolder<Button>(binding.root), ActionHandlingViewHolder {
+class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionViewConfig) : ChildViewHolder<Button>(binding.root, viewConfig), ActionHandlingViewHolder {
 	override var actionHandler: FusionAndroidActionHandler? = null
 	class Factory : FusionViewHolderFactory {
-		override fun createViewHolder(parent: ViewGroup): ButtonViewHolder {
+		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): FusionViewHolder<*> {
 			val binding = TextViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-			return ButtonViewHolder(binding)
+			return ButtonViewHolder(binding, viewConfig)
 		}
 	}
 

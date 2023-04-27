@@ -1,6 +1,7 @@
 package com.cube.fusion.android.core.holder.factory
 
 import android.view.ViewGroup
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.holder.FusionViewHolder
 
 /**
@@ -13,7 +14,8 @@ interface FusionViewHolderFactory {
 	/**
 	 * Create a new [FusionViewHolder] within a given [ViewGroup]
 	 *
-	 * @param parent the [ViewGroup] to create the [FusionViewHolder] in
+	 * @param parent The [ViewGroup] to create the [FusionViewHolder] in
+	 * @param viewConfig A reference to the [AndroidFusionViewConfig] instance used for configuring views
 	 */
-	fun createViewHolder(parent: ViewGroup): FusionViewHolder<*>?
+	fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): FusionViewHolder<*>?
 }

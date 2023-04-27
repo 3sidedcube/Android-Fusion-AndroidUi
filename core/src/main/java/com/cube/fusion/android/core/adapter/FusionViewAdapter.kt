@@ -152,7 +152,7 @@ class FusionViewAdapter(
 		val holder: FusionViewHolder<*>
 		try {
 			val holderFactory = itemTypes[viewType]!!.getConstructor().newInstance()
-			holder = holderFactory.createViewHolder(viewGroup)!!
+			holder = holderFactory.createViewHolder(viewGroup, viewConfig)!!
 		}
 		catch (e: Exception) {
 			throw IllegalStateException("Could not instantiate a new holder" + e.message, e)
@@ -161,7 +161,6 @@ class FusionViewAdapter(
 	}
 
 	override fun onBindViewHolder(viewHolder: FusionViewHolder<*>, position: Int) {
-		viewHolder.viewConfig = viewConfig
 		(viewHolder as? ActionHandlingViewHolder)?.actionHandler = viewConfig.actionHandler
 		(viewHolder as? ImageLoadingViewHolder)?.imageLoader = viewConfig.imageLoader
 		try {

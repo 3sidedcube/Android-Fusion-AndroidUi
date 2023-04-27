@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.core.view.isVisible
 import com.cube.fusion.android.core.R
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.ImageViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.images.FusionAndroidImageLoader
@@ -18,12 +19,12 @@ import com.cube.fusion.core.model.views.Image
  * Created by Nikos Rapousis on 11/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
-class ImageViewHolder(private val binding: ImageViewBinding) : ChildViewHolder<Image>(binding.root), ImageLoadingViewHolder {
+class ImageViewHolder(private val binding: ImageViewBinding, viewConfig: AndroidFusionViewConfig) : ChildViewHolder<Image>(binding.root, viewConfig), ImageLoadingViewHolder {
 	override var imageLoader: FusionAndroidImageLoader? = null
 	class Factory : FusionViewHolderFactory {
-		override fun createViewHolder(parent: ViewGroup): ImageViewHolder {
+		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): FusionViewHolder<*> {
 			val binding = ImageViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-			return ImageViewHolder(binding)
+			return ImageViewHolder(binding, viewConfig)
 		}
 	}
 

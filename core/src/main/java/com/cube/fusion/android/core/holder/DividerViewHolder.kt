@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.cube.fusion.android.core.R
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.DividerViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.extensions.dpToPx
@@ -17,11 +18,11 @@ import kotlin.math.roundToInt
  * Created by Nikos Rapousis on 11/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
-class DividerViewHolder(private val binding: DividerViewBinding) : FusionViewHolder<Divider>(binding.root) {
+class DividerViewHolder(private val binding: DividerViewBinding, viewConfig: AndroidFusionViewConfig) : FusionViewHolder<Divider>(binding.root, viewConfig) {
 	class Factory : FusionViewHolderFactory {
-		override fun createViewHolder(parent: ViewGroup): DividerViewHolder {
+		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): FusionViewHolder<*> {
 			val binding = DividerViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-			return DividerViewHolder(binding)
+			return DividerViewHolder(binding, viewConfig)
 		}
 	}
 
