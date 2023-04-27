@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cube.fusion.android.core.config.AndroidFusionConfig
 import com.cube.fusion.android.core.config.AndroidFusionViewConfig
-import com.cube.fusion.android.core.holder.ActionHandlingViewHolder
 import com.cube.fusion.android.core.holder.FusionViewHolder
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.resolver.AndroidViewResolver
@@ -160,7 +159,6 @@ class FusionViewAdapter(
 	}
 
 	override fun onBindViewHolder(viewHolder: FusionViewHolder<*>, position: Int) {
-		(viewHolder as? ActionHandlingViewHolder)?.actionHandler = viewConfig.actionHandler
 		try {
 			viewHolder.populateViewFromModel(getItem(position))
 		}

@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.cube.fusion.android.core.R
-import com.cube.fusion.android.core.actions.FusionAndroidActionHandler
 import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.ListItemViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
@@ -17,8 +16,7 @@ import com.cube.fusion.core.model.views.ListItem
  * Created by Nikos Rapousis on 12/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
-class ListItemViewHolder(private val binding: ListItemViewBinding, viewConfig: AndroidFusionViewConfig) : FusionViewHolder<ListItem>(binding.root, viewConfig), ActionHandlingViewHolder {
-	override var actionHandler: FusionAndroidActionHandler? = null
+class ListItemViewHolder(private val binding: ListItemViewBinding, viewConfig: AndroidFusionViewConfig) : FusionViewHolder<ListItem>(binding.root, viewConfig) {
 	private val titleViewHolder = TextViewHolder(binding.title, viewConfig)
 	private val subtitleViewHolder = TextViewHolder(binding.subtitle, viewConfig)
 	private val imageViewHolder = ImageViewHolder(binding.listItemImage, viewConfig)
@@ -56,7 +54,7 @@ class ListItemViewHolder(private val binding: ListItemViewBinding, viewConfig: A
 		binding.listItemContainer.setPadding(model.baseProperties.padding)
 
 		binding.cardContainer.setOnClickListener {
-			actionHandler?.handleAction(it, model.action)
+			viewConfig.actionHandler.handleAction(it, model.action)
 		}
 		binding.cardContainer.isClickable = model.action != null
 		binding.cardContainer.isEnabled = model.action != null
