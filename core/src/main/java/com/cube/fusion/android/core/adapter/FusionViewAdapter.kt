@@ -7,7 +7,6 @@ import com.cube.fusion.android.core.config.AndroidFusionConfig
 import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.holder.ActionHandlingViewHolder
 import com.cube.fusion.android.core.holder.FusionViewHolder
-import com.cube.fusion.android.core.holder.ImageLoadingViewHolder
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.resolver.AndroidViewResolver
 import com.cube.fusion.core.model.Model
@@ -162,7 +161,6 @@ class FusionViewAdapter(
 
 	override fun onBindViewHolder(viewHolder: FusionViewHolder<*>, position: Int) {
 		(viewHolder as? ActionHandlingViewHolder)?.actionHandler = viewConfig.actionHandler
-		(viewHolder as? ImageLoadingViewHolder)?.imageLoader = viewConfig.imageLoader
 		try {
 			viewHolder.populateViewFromModel(getItem(position))
 		}

@@ -8,7 +8,6 @@ import com.cube.fusion.android.core.actions.FusionAndroidActionHandler
 import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.ListItemViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
-import com.cube.fusion.android.core.images.FusionAndroidImageLoader
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
 import com.cube.fusion.core.model.views.ListItem
 
@@ -18,18 +17,11 @@ import com.cube.fusion.core.model.views.ListItem
  * Created by Nikos Rapousis on 12/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
-class ListItemViewHolder(private val binding: ListItemViewBinding, viewConfig: AndroidFusionViewConfig) : FusionViewHolder<ListItem>(binding.root, viewConfig), ActionHandlingViewHolder, ImageLoadingViewHolder {
+class ListItemViewHolder(private val binding: ListItemViewBinding, viewConfig: AndroidFusionViewConfig) : FusionViewHolder<ListItem>(binding.root, viewConfig), ActionHandlingViewHolder {
 	override var actionHandler: FusionAndroidActionHandler? = null
-	override var imageLoader: FusionAndroidImageLoader? = null
-		set(value) {
-			field = value
-			imageViewHolder.imageLoader = value
-		}
 	private val titleViewHolder = TextViewHolder(binding.title, viewConfig)
 	private val subtitleViewHolder = TextViewHolder(binding.subtitle, viewConfig)
-	private val imageViewHolder = ImageViewHolder(binding.listItemImage, viewConfig).apply {
-		imageLoader = this@ListItemViewHolder.imageLoader
-	}
+	private val imageViewHolder = ImageViewHolder(binding.listItemImage, viewConfig)
 
 	init {
 		binding.listItemImage.image.apply {
