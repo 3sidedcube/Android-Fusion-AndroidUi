@@ -20,7 +20,7 @@ import com.cube.fusion.core.model.views.Image
  */
 class ImageViewHolder(private val binding: ImageViewBinding, viewConfig: AndroidFusionViewConfig) : ChildViewHolder<Image>(binding.root, viewConfig) {
 	class Factory : FusionViewHolderFactory {
-		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): FusionViewHolder<*> {
+		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): ImageViewHolder {
 			val binding = ImageViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 			return ImageViewHolder(binding, viewConfig)
 		}

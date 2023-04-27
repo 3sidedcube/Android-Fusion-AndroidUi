@@ -31,7 +31,7 @@ class BulletViewHolder(val binding: BulletViewBinding, viewConfig: AndroidFusion
 	}
 
 	class Factory : FusionViewHolderFactory {
-		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): FusionViewHolder<*> {
+		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): BulletViewHolder {
 			val binding =
 				BulletViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 			return BulletViewHolder(binding, viewConfig)

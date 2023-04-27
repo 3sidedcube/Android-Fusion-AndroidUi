@@ -32,7 +32,7 @@ class ListItemViewHolder(private val binding: ListItemViewBinding, viewConfig: A
 	}
 
 	class Factory : FusionViewHolderFactory {
-		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): FusionViewHolder<*> {
+		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): ListItemViewHolder {
 			val binding = ListItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 			return ListItemViewHolder(binding, viewConfig)
 		}
