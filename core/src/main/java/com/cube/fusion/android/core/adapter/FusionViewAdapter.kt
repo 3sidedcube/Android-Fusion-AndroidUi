@@ -3,13 +3,12 @@ package com.cube.fusion.android.core.adapter
 import android.os.Parcelable
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.cube.fusion.android.core.actions.FusionAndroidActionHandler
 import com.cube.fusion.android.core.config.AndroidFusionConfig
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.holder.ActionHandlingViewHolder
 import com.cube.fusion.android.core.holder.FusionViewHolder
 import com.cube.fusion.android.core.holder.ImageLoadingViewHolder
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
-import com.cube.fusion.android.core.images.FusionAndroidImageLoader
 import com.cube.fusion.android.core.resolver.AndroidViewResolver
 import com.cube.fusion.core.model.Model
 import com.cube.fusion.core.model.views.Screen
@@ -29,20 +28,18 @@ import kotlinx.parcelize.RawValue
  * of the scrolling (depending on how much content there is) diminishes with the amount of unique content
  * that the list is rendering.
  *
- * @param actionHandler the action handler to use for views which handle actions
- * @param imageLoader the image loader to use for views which display images
- * @param resolvers the view resolvers to use to construct the UI
+ * @param viewConfig The configuration required for ViewHolders
+ * @param resolvers The view resolvers to use to construct the UI
  *
  * Created by Nikos Rapousis on 12/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
 class FusionViewAdapter(
-	private val actionHandler: FusionAndroidActionHandler,
-	private val imageLoader: FusionAndroidImageLoader?,
+	private val viewConfig: AndroidFusionViewConfig,
 	private val resolvers: Map<String, AndroidViewResolver>
 ) : RecyclerView.Adapter<FusionViewHolder<*>>() {
 
-	constructor(androidConfig: AndroidFusionConfig): this(androidConfig.actionHandler, androidConfig.imageLoader, androidConfig.resolvers)
+	constructor(androidConfig: AndroidFusionConfig): this(androidConfig.viewConfig, androidConfig.resolvers)
 
 	/**
 	 * Temporary store for adapter state
@@ -164,8 +161,8 @@ class FusionViewAdapter(
 	}
 
 	override fun onBindViewHolder(viewHolder: FusionViewHolder<*>, position: Int) {
-		(viewHolder as? ActionHandlingViewHolder)?.actionHandler = actionHandler
-		(viewHolder as? ImageLoadingViewHolder)?.imageLoader = imageLoader
+		(viewHolder as? ActionHandlingViewHolder)?.actionHandler = viewConfig.actionHandler
+		(viewHolder as? ImageLoadingViewHolder)?.imageLoader = viewConfig.imageLoader
 		try {
 			viewHolder.populateViewFromModel(getItem(position))
 		}
