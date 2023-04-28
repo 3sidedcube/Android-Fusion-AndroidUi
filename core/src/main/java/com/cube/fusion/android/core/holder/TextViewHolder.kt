@@ -16,7 +16,10 @@ import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.TextViewBinding
 import com.cube.fusion.android.core.helper.ColourHelper
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
+import com.cube.fusion.android.core.preprocessor.FusionBasePropertiesPreprocessor
+import com.cube.fusion.android.core.preprocessor.FusionTextPreprocessor
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
+import com.cube.fusion.android.core.utils.extensions.CollectionExtensions.preprocess
 import com.cube.fusion.android.core.utils.extensions.asGravity
 import com.cube.fusion.android.core.utils.extensions.getDimenOrEms
 import com.cube.fusion.android.core.utils.extensions.resolveAsTypeface
@@ -48,7 +51,8 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 		 * @param defaultLetterSpacing the resource ID for the default letter spacing to set if no other letter spacing is specified on the model
 		 * @param defaultGravity the default gravity to set if no other gravity is specified on the model
 		 */
-		fun populateView(textView: TextView, textModel: Text?, @DimenRes defaultTextSize: Int, @ColorRes defaultTextColour: Int, @DimenRes defaultLetterSpacing: Int, defaultGravity: Int) {
+		fun populateView(textView: TextView, textModel: Text?, modelPreprocessors: List<FusionTextPreprocessor>, @DimenRes defaultTextSize: Int, @ColorRes defaultTextColour: Int, @DimenRes defaultLetterSpacing: Int, defaultGravity: Int) {
+			val textModel = textModel?.let { modelPreprocessors.preprocess(it) }
 			textView.apply {
 				textModel?.font?.size?.let {
 					setTextSize(TypedValue.COMPLEX_UNIT_SP, it)
@@ -113,6 +117,7 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 		populateView(
 			textView = binding.text,
 			textModel = textModel,
+			modelPreprocessors = viewConfig.modelPreprocessors.filterIsInstance<FusionTextPreprocessor>(),
 			defaultTextSize = defaultTextSize,
 			defaultTextColour = defaultTextColour,
 			defaultLetterSpacing = defaultLetterSpacing,
@@ -122,6 +127,7 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 		populateBaseView(
 			cardView = binding.textContainer,
 			baseProperties = textModel?.baseProperties,
+			modelPreprocessors = viewConfig.modelPreprocessors.filterIsInstance<FusionBasePropertiesPreprocessor>(),
 			defaultBackgroundColourResId = defaultBgColour,
 			defaultCornerRadiusResId = defaultCornerRadius
 		)

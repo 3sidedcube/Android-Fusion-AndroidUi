@@ -12,8 +12,10 @@ import com.cube.fusion.android.core.R
 import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.helper.ColourHelper
 import com.cube.fusion.android.core.helper.ShadowHelper
+import com.cube.fusion.android.core.preprocessor.FusionBasePropertiesPreprocessor
 import com.cube.fusion.android.core.utils.MarginUtils.orDefault
 import com.cube.fusion.android.core.utils.MarginUtils.setMargin
+import com.cube.fusion.android.core.utils.extensions.CollectionExtensions.preprocess
 import com.cube.fusion.android.core.utils.extensions.dpToPx
 import com.cube.fusion.android.core.utils.shadow.ShadowBasicInset
 import com.cube.fusion.android.core.utils.shadow.ShadowRectSpec
@@ -72,11 +74,14 @@ abstract class FusionViewHolder<T : Model>(itemView: View, protected val viewCon
 	protected fun populateBaseView(
 		cardView: MaterialCardView,
 		baseProperties: BaseViewProperties?,
+		modelPreprocessors: List<FusionBasePropertiesPreprocessor>,
 		@ColorRes defaultBackgroundColourResId: Int,
 		@DimenRes defaultCornerRadiusResId: Int
 	) {
 		val theme = cardView.context.theme
 		val resources = cardView.resources
+
+		val baseProperties = baseProperties?.let { modelPreprocessors.preprocess(it) }
 
 		// Background colour
 		val bgColour = baseProperties?.backgroundColor?.let {

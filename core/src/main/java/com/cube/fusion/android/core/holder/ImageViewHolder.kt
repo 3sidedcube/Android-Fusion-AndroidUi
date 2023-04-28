@@ -8,6 +8,7 @@ import com.cube.fusion.android.core.R
 import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.ImageViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
+import com.cube.fusion.android.core.preprocessor.FusionBasePropertiesPreprocessor
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
 import com.cube.fusion.android.core.utils.extensions.dpToPx
 import com.cube.fusion.core.model.views.Image
@@ -52,6 +53,7 @@ class ImageViewHolder(private val binding: ImageViewBinding, viewConfig: Android
 		populateBaseView(
 			binding.imageContainer,
 			image?.baseProperties,
+			modelPreprocessors = viewConfig.modelPreprocessors.filterIsInstance<FusionBasePropertiesPreprocessor>(),
 			defaultBgColour,
 			R.dimen.fusion_default_image_view_corner_radius
 		)

@@ -36,6 +36,7 @@ class LegacyContentActivity : AppCompatActivity() {
 		viewConfig = AndroidFusionViewConfig(
 			actionHandler = DefaultActivityActionHandlers(LegacyContentActivity::class.java),
 			imageLoader = ImageLoadingManager.imageLoader,
+			modelPreprocessors = emptyList()
 		)
 	)
 	private val fragmentFactory = FusionContentFragmentFactory(fusionConfig)

@@ -11,6 +11,7 @@ import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.BulletGroupViewBinding
 import com.cube.fusion.android.core.databinding.BulletViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
+import com.cube.fusion.android.core.preprocessor.FusionBasePropertiesPreprocessor
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
 import com.cube.fusion.core.model.views.BulletGroup
 
@@ -68,6 +69,7 @@ class BulletGroupViewHolder(val binding: BulletGroupViewBinding, viewConfig: And
 		populateBaseView(
 			binding.root,
 			model.baseProperties,
+			modelPreprocessors = viewConfig.modelPreprocessors.filterIsInstance<FusionBasePropertiesPreprocessor>(),
 			R.color.fusion_default_bullet_group_view_background_colour,
 			R.dimen.fusion_default_bullet_group_view_corner_radius
 		)

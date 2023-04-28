@@ -7,6 +7,8 @@ import com.cube.fusion.android.core.R
 import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.TextViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
+import com.cube.fusion.android.core.preprocessor.FusionBasePropertiesPreprocessor
+import com.cube.fusion.android.core.preprocessor.FusionTextPreprocessor
 import com.cube.fusion.core.model.views.Button
 
 /**
@@ -27,6 +29,7 @@ class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionVi
 		TextViewHolder.populateView(
 			textView = binding.text,
 			textModel = model.baseProperties,
+			modelPreprocessors = viewConfig.modelPreprocessors.filterIsInstance(FusionTextPreprocessor::class.java),
 			defaultTextSize = R.dimen.fusion_default_button_view_text_size,
 			defaultTextColour = R.color.fusion_default_button_view_text_colour,
 			defaultLetterSpacing = R.dimen.fusion_default_button_view_letter_spacing,
@@ -35,6 +38,7 @@ class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionVi
 		populateBaseView(
 			cardView = binding.textContainer,
 			baseProperties = model.baseProperties.baseProperties,
+			modelPreprocessors = viewConfig.modelPreprocessors.filterIsInstance(FusionBasePropertiesPreprocessor::class.java),
 			defaultBackgroundColourResId = R.color.fusion_default_button_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_button_view_corner_radius
 		)
@@ -45,6 +49,7 @@ class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionVi
 		TextViewHolder.populateView(
 			textView = binding.text,
 			textModel = model?.baseProperties,
+			modelPreprocessors = viewConfig.modelPreprocessors.filterIsInstance(FusionTextPreprocessor::class.java),
 			defaultTextSize = R.dimen.fusion_default_button_view_text_size,
 			defaultTextColour = R.color.fusion_default_button_view_text_colour,
 			defaultLetterSpacing = R.dimen.fusion_default_button_view_letter_spacing,
@@ -53,6 +58,7 @@ class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionVi
 		populateBaseView(
 			cardView = binding.textContainer,
 			baseProperties = model?.baseProperties?.baseProperties,
+			modelPreprocessors = viewConfig.modelPreprocessors.filterIsInstance(FusionBasePropertiesPreprocessor::class.java),
 			defaultBackgroundColourResId = android.R.color.transparent,
 			defaultCornerRadiusResId = R.dimen.fusion_default_button_view_corner_radius
 		)

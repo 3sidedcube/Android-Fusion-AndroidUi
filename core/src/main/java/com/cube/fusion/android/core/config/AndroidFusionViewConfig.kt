@@ -2,6 +2,7 @@ package com.cube.fusion.android.core.config
 
 import com.cube.fusion.android.core.actions.FusionAndroidActionHandler
 import com.cube.fusion.android.core.images.FusionAndroidImageLoader
+import com.cube.fusion.android.core.preprocessor.FusionModelPreprocessor
 
 /**
  * Convenience class for storing configuration objects needed by ViewHolders in a Fusion Android setup
@@ -14,5 +15,6 @@ import com.cube.fusion.android.core.images.FusionAndroidImageLoader
  */
 class AndroidFusionViewConfig(
 	val actionHandler: FusionAndroidActionHandler,
-	val imageLoader: FusionAndroidImageLoader?
+	val imageLoader: FusionAndroidImageLoader?,
+	val modelPreprocessors: List<FusionModelPreprocessor<*>>
 )
