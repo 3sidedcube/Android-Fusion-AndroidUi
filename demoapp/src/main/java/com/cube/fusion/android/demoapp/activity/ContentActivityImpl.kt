@@ -15,7 +15,7 @@ import com.cube.fusion.android.core.helper.ViewHelper
 import com.cube.fusion.android.core.resolver.DefaultViewResolver
 import com.cube.fusion.android.demoapp.databinding.ActivityFusionImplBinding
 import com.cube.fusion.android.demoapp.holder.CardViewHolder
-import com.cube.fusion.android.demoapp.images.PicassoImageLoader
+import com.cube.fusion.android.demoapp.images.CoilImageLoader
 import com.cube.fusion.android.demoapp.model.Card
 import com.cube.fusion.core.model.Border
 import com.cube.fusion.core.model.views.BaseViewProperties
@@ -71,7 +71,7 @@ class ContentActivityImpl : FusionContentActivity() {
 						view.context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
 					}
 				},
-				imageLoader = PicassoImageLoader,
+				imageLoader = CoilImageLoader,
 				preprocessors = listOf(
 					object : Text.Preprocessor {
 						override fun preprocess(data: Text) = data.copy(
