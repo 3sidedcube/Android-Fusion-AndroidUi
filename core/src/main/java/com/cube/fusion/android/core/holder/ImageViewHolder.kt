@@ -12,6 +12,7 @@ import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
 import com.cube.fusion.android.core.utils.extensions.dpToPx
 import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.Image
+import com.cube.fusion.core.utils.CollectionExtensions.preprocess
 
 /**
  * [FusionViewHolder] implementation to represent the [Image] view
@@ -30,11 +31,14 @@ class ImageViewHolder(private val binding: ImageViewBinding, viewConfig: Android
 	/**
 	 * Common functionality for both overridden [populateView] and [populateChildView]
 	 *
-	 * @param image the model to update UI state from, or null
-	 *  if null, should set UI to default state
-	 * @param defaultBgColour the default background colour to set if no other background colour is specified on the model
+	 * @param unprocessedImage The model to update UI state from, or null.
+	 *  If null, should set UI to default state
+	 * @param defaultBgColour The default background colour to set if no other background colour is specified on the model
 	 */
-	private fun populateView(image: Image?, @ColorRes defaultBgColour: Int) {
+	private fun populateView(unprocessedImage: Image?, @ColorRes defaultBgColour: Int) {
+		// Data preprocessing
+		val image = unprocessedImage?.let { viewConfig.preprocessors.filterIsInstance<Image.Preprocessor>().preprocess(it) }
+
 		binding.image.apply {
 			isVisible = image?.src?.url != null
 			viewConfig.imageLoader?.loadImage(image, this)

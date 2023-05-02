@@ -13,6 +13,7 @@ import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
 import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.Bullet
+import com.cube.fusion.core.utils.CollectionExtensions.preprocess
 
 /**
  * [FusionViewHolder] implementation to represent the [Bullet] view
@@ -53,21 +54,24 @@ class BulletViewHolder(val binding: BulletViewBinding, viewConfig: AndroidFusion
 	}
 
 	override fun populateView(unprocessedModel: Bullet) {
-		titleViewHolder.populateChildView(unprocessedModel.title)
-		subtitleViewHolder.populateChildView(unprocessedModel.subtitle)
+		// Data preprocessing
+		val model = viewConfig.preprocessors.filterIsInstance<Bullet.Preprocessor>().preprocess(unprocessedModel)
+		
+		titleViewHolder.populateChildView(model.title)
+		subtitleViewHolder.populateChildView(model.subtitle)
 
-		binding.order.text = unprocessedModel.order.toString()
-		delegate.model = unprocessedModel
+		binding.order.text = model.order.toString()
+		delegate.model = model
 
 		populateBaseView(
 			cardView = binding.cardContainer,
-			unprocessedProperties = unprocessedModel.baseProperties,
+			unprocessedProperties = model.baseProperties,
 			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = R.color.fusion_default_bullet_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_bullet_view_corner_radius
 		)
 
 		//Apply padding
-		binding.bulletViewContainer.setPadding(unprocessedModel.baseProperties.padding)
+		binding.bulletViewContainer.setPadding(model.baseProperties.padding)
 	}
 }

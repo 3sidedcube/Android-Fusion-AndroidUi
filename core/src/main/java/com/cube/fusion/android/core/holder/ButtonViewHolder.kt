@@ -9,6 +9,8 @@ import com.cube.fusion.android.core.databinding.TextViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.Button
+import com.cube.fusion.core.model.views.Text
+import com.cube.fusion.core.utils.CollectionExtensions.preprocess
 
 /**
  * [FusionViewHolder] implementation to represent the [Button] view
@@ -25,9 +27,13 @@ class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionVi
 	}
 
 	override fun populateView(unprocessedModel: Button) {
+		// Data preprocessing
+		val model = viewConfig.preprocessors.filterIsInstance<Button.Preprocessor>().preprocess(unprocessedModel)
+
 		TextViewHolder.populateView(
 			textView = binding.text,
-			textModel = unprocessedModel.baseProperties,
+			unprocessedModel = model.baseProperties,
+			preprocessors = viewConfig.preprocessors.filterIsInstance<Text.Preprocessor>(),
 			defaultTextSize = R.dimen.fusion_default_button_view_text_size,
 			defaultTextColour = R.color.fusion_default_button_view_text_colour,
 			defaultLetterSpacing = R.dimen.fusion_default_button_view_letter_spacing,
@@ -35,18 +41,22 @@ class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionVi
 		)
 		populateBaseView(
 			cardView = binding.textContainer,
-			unprocessedProperties = unprocessedModel.baseProperties.baseProperties,
+			unprocessedProperties = model.baseProperties.baseProperties,
 			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = R.color.fusion_default_button_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_button_view_corner_radius
 		)
-		populateClickHandler(unprocessedModel)
+		populateClickHandler(model)
 	}
 
 	override fun populateChildView(unprocessedModel: Button?) {
+		// Data preprocessing
+		val model = unprocessedModel?.let { viewConfig.preprocessors.filterIsInstance<Button.Preprocessor>().preprocess(it) }
+
 		TextViewHolder.populateView(
 			textView = binding.text,
-			textModel = unprocessedModel?.baseProperties,
+			unprocessedModel = model?.baseProperties,
+			preprocessors = viewConfig.preprocessors.filterIsInstance<Text.Preprocessor>(),
 			defaultTextSize = R.dimen.fusion_default_button_view_text_size,
 			defaultTextColour = R.color.fusion_default_button_view_text_colour,
 			defaultLetterSpacing = R.dimen.fusion_default_button_view_letter_spacing,
@@ -54,12 +64,12 @@ class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionVi
 		)
 		populateBaseView(
 			cardView = binding.textContainer,
-			unprocessedProperties = unprocessedModel?.baseProperties?.baseProperties,
+			unprocessedProperties = model?.baseProperties?.baseProperties,
 			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = android.R.color.transparent,
 			defaultCornerRadiusResId = R.dimen.fusion_default_button_view_corner_radius
 		)
-		populateClickHandler(unprocessedModel)
+		populateClickHandler(model)
 	}
 
 	private fun populateClickHandler(model: Button?) {

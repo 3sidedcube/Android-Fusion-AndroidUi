@@ -23,6 +23,7 @@ import com.cube.fusion.android.core.utils.extensions.resolveAsTypeface
 import com.cube.fusion.android.core.utils.extensions.toTypeface
 import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.Text
+import com.cube.fusion.core.utils.CollectionExtensions.preprocess
 
 /**
  * [FusionViewHolder] implementation to represent the [Text] view
@@ -42,14 +43,41 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 		/**
 		 * Common functionality for updating a [TextView] with properties from the [Text] model
 		 *
-		 * @param textModel the model to update UI state from, or null
-		 *  if null, should set UI to default state
-		 * @param defaultTextSize the resource ID for the default text size to set if no other text size is specified on the model
-		 * @param defaultTextColour the resource ID for the default text colour to set if no other text colour is specified on the model
-		 * @param defaultLetterSpacing the resource ID for the default letter spacing to set if no other letter spacing is specified on the model
-		 * @param defaultGravity the default gravity to set if no other gravity is specified on the model
+		 * @param textView The view to update the UI of
+		 * @param unprocessedModel The unprocessed model to update UI state from, or null.
+		 *  If null, should set UI to default state.
+		 * @param preprocessors A list of pre-processing steps to apply to the unprocessed text model before updating the UI
+		 * @param defaultTextSize The resource ID for the default text size to set if no other text size is specified on the model
+		 * @param defaultTextColour The resource ID for the default text colour to set if no other text colour is specified on the model
+		 * @param defaultLetterSpacing The resource ID for the default letter spacing to set if no other letter spacing is specified on the model
+		 * @param defaultGravity The default gravity to set if no other gravity is specified on the model
 		 */
-		fun populateView(textView: TextView, textModel: Text?, @DimenRes defaultTextSize: Int, @ColorRes defaultTextColour: Int, @DimenRes defaultLetterSpacing: Int, defaultGravity: Int) {
+		fun populateView(textView: TextView, unprocessedModel: Text?, preprocessors: List<Text.Preprocessor>, @DimenRes defaultTextSize: Int, @ColorRes defaultTextColour: Int, @DimenRes defaultLetterSpacing: Int, defaultGravity: Int) {
+			// Data pre-processing
+			val textModel = unprocessedModel?.let { preprocessors.preprocess(it) }
+
+			populateView(
+				textView = textView,
+				textModel = textModel,
+				defaultTextSize = defaultTextSize,
+				defaultTextColour = defaultTextColour,
+				defaultLetterSpacing = defaultLetterSpacing,
+				defaultGravity = defaultGravity
+			)
+		}
+
+		/**
+		 * Common functionality for updating a [TextView] with properties from the [Text] model
+		 *
+		 * @param textView The view to update the UI of
+		 * @param textModel The pre-processed [Text] model to update UI state from, or null.
+		 *  If null, should set UI to default state.
+		 * @param defaultTextSize The resource ID for the default text size to set if no other text size is specified on the model
+		 * @param defaultTextColour The resource ID for the default text colour to set if no other text colour is specified on the model
+		 * @param defaultLetterSpacing The resource ID for the default letter spacing to set if no other letter spacing is specified on the model
+		 * @param defaultGravity The default gravity to set if no other gravity is specified on the model
+		 */
+		private fun populateView(textView: TextView, textModel: Text?, @DimenRes defaultTextSize: Int, @ColorRes defaultTextColour: Int, @DimenRes defaultLetterSpacing: Int, defaultGravity: Int) {
 			textView.apply {
 				textModel?.font?.size?.let {
 					setTextSize(TypedValue.COMPLEX_UNIT_SP, it)
@@ -101,16 +129,20 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 	/**
 	 * Common functionality for updating the [TextViewBinding] with properties of the [Text] model
 	 *
-	 * @param textModel the model to update UI state from, or null
-	 *  if null, should set UI to default state
-	 * @param defaultBgColour the default background colour to set if no other background colour is specified on the model
-	 * @param defaultCornerRadius the resource ID for the default corner radius to set if no other corner radius is specified on the model
-	 * @param defaultTextSize the resource ID for the default text size to set if no other text size is specified on the model
-	 * @param defaultTextColour the resource ID for the default text colour to set if no other text colour is specified on the model
-	 * @param defaultLetterSpacing the resource ID for the default letter spacing to set if no other letter spacing is specified on the model
-	 * @param defaultGravity the default gravity to set if no other gravity is specified on the model
+	 * @param unprocessedModel The unprocessed model to update UI state from, or null.
+	 *  If null, should set UI to default state.
+	 * @param defaultBgColour The default background colour to set if no other background colour is specified on the model
+	 * @param defaultCornerRadius The resource ID for the default corner radius to set if no other corner radius is specified on the model
+	 * @param defaultTextSize The resource ID for the default text size to set if no other text size is specified on the model
+	 * @param defaultTextColour The resource ID for the default text colour to set if no other text colour is specified on the model
+	 * @param defaultLetterSpacing The resource ID for the default letter spacing to set if no other letter spacing is specified on the model
+	 * @param defaultGravity The default gravity to set if no other gravity is specified on the model
 	 */
-	fun populateView(textModel: Text?, @ColorRes defaultBgColour: Int, @DimenRes defaultCornerRadius: Int, @DimenRes defaultTextSize : Int, @ColorRes defaultTextColour : Int, @DimenRes defaultLetterSpacing : Int, defaultGravity: Int) {
+	fun populateView(unprocessedModel: Text?, @ColorRes defaultBgColour: Int, @DimenRes defaultCornerRadius: Int, @DimenRes defaultTextSize : Int, @ColorRes defaultTextColour : Int, @DimenRes defaultLetterSpacing : Int, defaultGravity: Int) {
+		// Data pre-processing
+		val preprocessors = viewConfig.preprocessors.filterIsInstance<Text.Preprocessor>()
+		val textModel = unprocessedModel?.let { preprocessors.preprocess(it) }
+
 		populateView(
 			textView = binding.text,
 			textModel = textModel,
@@ -130,7 +162,7 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 	}
 
 	override fun populateView(unprocessedModel: Text) = populateView(
-		textModel = unprocessedModel,
+		unprocessedModel = unprocessedModel,
 		defaultBgColour = R.color.fusion_default_text_view_background_colour,
 		defaultCornerRadius = R.dimen.fusion_default_text_view_corner_radius,
 		defaultTextSize = R.dimen.fusion_default_text_view_text_size,
@@ -140,7 +172,7 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 	)
 
 	override fun populateChildView(unprocessedModel: Text?) = populateView(
-		textModel = unprocessedModel,
+		unprocessedModel = unprocessedModel,
 		defaultBgColour = android.R.color.transparent,
 		defaultCornerRadius = R.dimen.fusion_default_text_view_corner_radius,
 		defaultTextSize = R.dimen.fusion_default_text_view_text_size,

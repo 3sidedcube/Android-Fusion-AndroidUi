@@ -14,6 +14,7 @@ import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
 import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.BulletGroup
+import com.cube.fusion.core.utils.CollectionExtensions.preprocess
 
 /**
  * [FusionViewHolder] implementation to represent the [BulletGroup] view
@@ -44,13 +45,16 @@ class BulletGroupViewHolder(val binding: BulletGroupViewBinding, viewConfig: And
 	}
 
 	override fun populateView(unprocessedModel: BulletGroup) {
+		// Data preprocessing
+		val model = viewConfig.preprocessors.filterIsInstance<BulletGroup.Preprocessor>().preprocess(unprocessedModel)
+		
 		val context = itemView.context
 		binding.root.unregisterAllChildViewHolders()
 		binding.bulletGroupContainer.removeAllViews()
 
-		delegate.count = unprocessedModel.children.size
+		delegate.count = model.children.size
 
-		for (index in 0 until unprocessedModel.children.size) {
+		for (index in 0 until model.children.size) {
 			val annotateView = BulletViewHolder(
 				BulletViewBinding.inflate(
 					LayoutInflater.from(context),
@@ -59,7 +63,7 @@ class BulletGroupViewHolder(val binding: BulletGroupViewBinding, viewConfig: And
 				),
 				viewConfig
 			)
-			val annotation = unprocessedModel.children[index]
+			val annotation = model.children[index]
 			annotation.order = index + 1
 			annotateView.populateViewFromModel(annotation)
 			binding.bulletGroupContainer.addView(annotateView.itemView)
@@ -68,13 +72,13 @@ class BulletGroupViewHolder(val binding: BulletGroupViewBinding, viewConfig: And
 
 		populateBaseView(
 			cardView = binding.root,
-			unprocessedProperties = unprocessedModel.baseProperties,
+			unprocessedProperties = model.baseProperties,
 			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = R.color.fusion_default_bullet_group_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_bullet_group_view_corner_radius
 		)
 
 		//Apply padding
-		binding.bulletGroupContainer.setPadding(unprocessedModel.baseProperties.padding)
+		binding.bulletGroupContainer.setPadding(model.baseProperties.padding)
 	}
 }

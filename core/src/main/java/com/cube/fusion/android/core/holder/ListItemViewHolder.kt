@@ -10,6 +10,7 @@ import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
 import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.ListItem
+import com.cube.fusion.core.utils.CollectionExtensions.preprocess
 
 /**
  * [FusionViewHolder] implementation to represent the [ListItem] view
@@ -40,26 +41,29 @@ class ListItemViewHolder(private val binding: ListItemViewBinding, viewConfig: A
 	}
 
 	override fun populateView(unprocessedModel: ListItem) {
-		imageViewHolder.populateChildView(unprocessedModel.image)
-		titleViewHolder.populateChildView( unprocessedModel.title)
-		subtitleViewHolder.populateChildView(unprocessedModel.subtitle)
+		// Data preprocessing
+		val model = viewConfig.preprocessors.filterIsInstance<ListItem.Preprocessor>().preprocess(unprocessedModel)
+		
+		imageViewHolder.populateChildView(model.image)
+		titleViewHolder.populateChildView( model.title)
+		subtitleViewHolder.populateChildView(model.subtitle)
 
 		populateBaseView(
 			cardView = binding.cardContainer,
-			unprocessedProperties = unprocessedModel.baseProperties,
+			unprocessedProperties = model.baseProperties,
 			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = R.color.fusion_default_list_item_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_list_item_view_corner_radius
 		)
 
 		//Apply padding
-		binding.listItemContainer.setPadding(unprocessedModel.baseProperties.padding)
+		binding.listItemContainer.setPadding(model.baseProperties.padding)
 
 		binding.cardContainer.setOnClickListener {
-			viewConfig.actionHandler.handleAction(it, unprocessedModel.action)
+			viewConfig.actionHandler.handleAction(it, model.action)
 		}
-		binding.cardContainer.isClickable = unprocessedModel.action != null
-		binding.cardContainer.isEnabled = unprocessedModel.action != null
-		binding.chevron.isVisible = unprocessedModel.action != null
+		binding.cardContainer.isClickable = model.action != null
+		binding.cardContainer.isEnabled = model.action != null
+		binding.chevron.isVisible = model.action != null
 	}
 }
