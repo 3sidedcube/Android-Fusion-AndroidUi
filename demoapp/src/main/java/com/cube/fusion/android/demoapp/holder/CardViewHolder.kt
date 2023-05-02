@@ -11,8 +11,8 @@ import com.cube.fusion.android.demoapp.R
 import com.cube.fusion.android.demoapp.databinding.CardViewBinding
 import com.cube.fusion.android.demoapp.model.Card
 import com.cube.fusion.core.model.views.BaseViewProperties
+import com.cube.fusion.core.model.views.Image
 import com.cube.fusion.core.utils.CollectionExtensions.preprocess
-import com.squareup.picasso.Picasso
 
 /**
  * Example custom [FusionViewHolder] for the [Card] example custom view
@@ -41,9 +41,7 @@ class CardViewHolder(private val binding: CardViewBinding, viewConfig: AndroidFu
 		binding.subtitle.text = model.subtitle ?: ""
 
 		binding.image.isVisible = model.image?.url != null
-		model.image?.url?.let {
-			Picasso.get().load(it).placeholder(R.mipmap.ic_placeholder).error(R.mipmap.ic_placeholder).into(binding.image)
-		}
+		viewConfig.imageLoader?.loadImage(Image(src = model.image), binding.image)
 
 		//Padding
 		binding.cardViewLinearLayout.setPadding(model.baseProperties.padding)
