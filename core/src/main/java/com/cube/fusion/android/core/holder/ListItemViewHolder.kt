@@ -39,27 +39,27 @@ class ListItemViewHolder(private val binding: ListItemViewBinding, viewConfig: A
 		}
 	}
 
-	override fun populateView(model: ListItem) {
-		imageViewHolder.populateChildView(model.image)
-		titleViewHolder.populateChildView( model.title)
-		subtitleViewHolder.populateChildView(model.subtitle)
+	override fun populateView(unprocessedModel: ListItem) {
+		imageViewHolder.populateChildView(unprocessedModel.image)
+		titleViewHolder.populateChildView( unprocessedModel.title)
+		subtitleViewHolder.populateChildView(unprocessedModel.subtitle)
 
 		populateBaseView(
 			cardView = binding.cardContainer,
-			unprocessedProperties = model.baseProperties,
+			unprocessedProperties = unprocessedModel.baseProperties,
 			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = R.color.fusion_default_list_item_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_list_item_view_corner_radius
 		)
 
 		//Apply padding
-		binding.listItemContainer.setPadding(model.baseProperties.padding)
+		binding.listItemContainer.setPadding(unprocessedModel.baseProperties.padding)
 
 		binding.cardContainer.setOnClickListener {
-			viewConfig.actionHandler.handleAction(it, model.action)
+			viewConfig.actionHandler.handleAction(it, unprocessedModel.action)
 		}
-		binding.cardContainer.isClickable = model.action != null
-		binding.cardContainer.isEnabled = model.action != null
-		binding.chevron.isVisible = model.action != null
+		binding.cardContainer.isClickable = unprocessedModel.action != null
+		binding.cardContainer.isEnabled = unprocessedModel.action != null
+		binding.chevron.isVisible = unprocessedModel.action != null
 	}
 }

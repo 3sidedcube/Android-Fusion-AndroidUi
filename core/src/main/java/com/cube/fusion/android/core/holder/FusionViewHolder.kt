@@ -39,15 +39,15 @@ abstract class FusionViewHolder<T : Model>(itemView: View, protected val viewCon
 	 * Called when the view needs to be populated
 	 * Note: unchecked cast from Model to T; should never cause issues provided all registered Views are named and registered correctly.
 	 *
-	 * @param model The model to populate the view with
+	 * @param unprocessedModel The unprocessed model to populate the view with
 	 */
 	@Suppress("UNCHECKED_CAST")
-	fun populateViewFromModel(model: Model) = populateView(model as T)
+	fun populateViewFromModel(unprocessedModel: Model) = populateView(unprocessedModel as T)
 
 	/**
-	 * Updates the UI of the view based on a [model] of type [T]
+	 * Updates the UI of the view based on a [unprocessedModel] of type [T]
 	 */
-	protected abstract fun populateView(model: T)
+	protected abstract fun populateView(unprocessedModel: T)
 
 	override var shadowRectSpec: List<ShadowRectSpec>? = null
 		protected set

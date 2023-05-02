@@ -12,11 +12,11 @@ import com.cube.fusion.core.model.Model
  */
 abstract class ChildViewHolder<T : Model>(itemView: View, viewConfig: AndroidFusionViewConfig) : FusionViewHolder<T>(itemView, viewConfig) {
 	/**
-	 * Updates the UI of the view based on a nullable [model] of type [T]
+	 * Updates the UI of the view based on a nullable [unprocessedModel] of type [T]
 	 * Should behave as similarly to [populateView] as possible, however, there may be cases (such as with background colour) where behaviour should differ
 	 *
-	 * @param model the model to update UI from, or null
+	 * @param unprocessedModel The unprocessed model to update UI from, or null
 	 *  if null, should set the view to its default UI state
 	 */
-	abstract fun populateChildView(model: T?)
+	abstract fun populateChildView(unprocessedModel: T?)
 }

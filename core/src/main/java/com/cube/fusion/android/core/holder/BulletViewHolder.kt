@@ -52,22 +52,22 @@ class BulletViewHolder(val binding: BulletViewBinding, viewConfig: AndroidFusion
 		}
 	}
 
-	override fun populateView(model: Bullet) {
-		titleViewHolder.populateChildView(model.title)
-		subtitleViewHolder.populateChildView(model.subtitle)
+	override fun populateView(unprocessedModel: Bullet) {
+		titleViewHolder.populateChildView(unprocessedModel.title)
+		subtitleViewHolder.populateChildView(unprocessedModel.subtitle)
 
-		binding.order.text = model.order.toString()
-		delegate.model = model
+		binding.order.text = unprocessedModel.order.toString()
+		delegate.model = unprocessedModel
 
 		populateBaseView(
 			cardView = binding.cardContainer,
-			unprocessedProperties = model.baseProperties,
+			unprocessedProperties = unprocessedModel.baseProperties,
 			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = R.color.fusion_default_bullet_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_bullet_view_corner_radius
 		)
 
 		//Apply padding
-		binding.bulletViewContainer.setPadding(model.baseProperties.padding)
+		binding.bulletViewContainer.setPadding(unprocessedModel.baseProperties.padding)
 	}
 }

@@ -59,6 +59,6 @@ class ImageViewHolder(private val binding: ImageViewBinding, viewConfig: Android
 		)
 	}
 
-	override fun populateView(model: Image) = populateView(model, R.color.fusion_default_image_view_background_colour)
-	override fun populateChildView(model: Image?) = populateView(model, android.R.color.transparent)
+	override fun populateView(unprocessedModel: Image) = populateView(unprocessedModel, R.color.fusion_default_image_view_background_colour)
+	override fun populateChildView(unprocessedModel: Image?) = populateView(unprocessedModel, android.R.color.transparent)
 }

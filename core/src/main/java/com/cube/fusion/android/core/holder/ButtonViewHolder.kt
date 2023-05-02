@@ -24,10 +24,10 @@ class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionVi
 		}
 	}
 
-	override fun populateView(model: Button) {
+	override fun populateView(unprocessedModel: Button) {
 		TextViewHolder.populateView(
 			textView = binding.text,
-			textModel = model.baseProperties,
+			textModel = unprocessedModel.baseProperties,
 			defaultTextSize = R.dimen.fusion_default_button_view_text_size,
 			defaultTextColour = R.color.fusion_default_button_view_text_colour,
 			defaultLetterSpacing = R.dimen.fusion_default_button_view_letter_spacing,
@@ -35,18 +35,18 @@ class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionVi
 		)
 		populateBaseView(
 			cardView = binding.textContainer,
-			unprocessedProperties = model.baseProperties.baseProperties,
+			unprocessedProperties = unprocessedModel.baseProperties.baseProperties,
 			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = R.color.fusion_default_button_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_button_view_corner_radius
 		)
-		populateClickHandler(model)
+		populateClickHandler(unprocessedModel)
 	}
 
-	override fun populateChildView(model: Button?) {
+	override fun populateChildView(unprocessedModel: Button?) {
 		TextViewHolder.populateView(
 			textView = binding.text,
-			textModel = model?.baseProperties,
+			textModel = unprocessedModel?.baseProperties,
 			defaultTextSize = R.dimen.fusion_default_button_view_text_size,
 			defaultTextColour = R.color.fusion_default_button_view_text_colour,
 			defaultLetterSpacing = R.dimen.fusion_default_button_view_letter_spacing,
@@ -54,12 +54,12 @@ class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionVi
 		)
 		populateBaseView(
 			cardView = binding.textContainer,
-			unprocessedProperties = model?.baseProperties?.baseProperties,
+			unprocessedProperties = unprocessedModel?.baseProperties?.baseProperties,
 			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = android.R.color.transparent,
 			defaultCornerRadiusResId = R.dimen.fusion_default_button_view_corner_radius
 		)
-		populateClickHandler(model)
+		populateClickHandler(unprocessedModel)
 	}
 
 	private fun populateClickHandler(model: Button?) {

@@ -129,8 +129,8 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 		)
 	}
 
-	override fun populateView(model: Text) = populateView(
-		textModel = model,
+	override fun populateView(unprocessedModel: Text) = populateView(
+		textModel = unprocessedModel,
 		defaultBgColour = R.color.fusion_default_text_view_background_colour,
 		defaultCornerRadius = R.dimen.fusion_default_text_view_corner_radius,
 		defaultTextSize = R.dimen.fusion_default_text_view_text_size,
@@ -139,8 +139,8 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 		defaultGravity = Gravity.START
 	)
 
-	override fun populateChildView(model: Text?) = populateView(
-		textModel = model,
+	override fun populateChildView(unprocessedModel: Text?) = populateView(
+		textModel = unprocessedModel,
 		defaultBgColour = android.R.color.transparent,
 		defaultCornerRadius = R.dimen.fusion_default_text_view_corner_radius,
 		defaultTextSize = R.dimen.fusion_default_text_view_text_size,

@@ -33,18 +33,18 @@ class DividerViewHolder(private val binding: DividerViewBinding, viewConfig: And
 	 * This is equivalent to if there was a zero-size view in the middle and the specified amount of padding -
 	 * 	since width is MATCH_PARENT, horizontal padding would do nothing, but vertical padding would increase container size
 	 */
-	override fun populateView(model: Divider) {
-		val height = model.strokeWidth?.let {
+	override fun populateView(unprocessedModel: Divider) {
+		val height = unprocessedModel.strokeWidth?.let {
 			itemView.resources.dpToPx(it)
 		} ?: itemView.resources.getDimension(R.dimen.fusion_default_divider_height)
-		val verticalPadding = model.baseProperties.padding?.let {
+		val verticalPadding = unprocessedModel.baseProperties.padding?.let {
 			itemView.resources.dpToPx(it.top + it.bottom)
 		} ?: itemView.resources.let { it.getDimension(R.dimen.fusion_default_padding_top) + it.getDimension(R.dimen.fusion_default_padding_bottom) }
 		binding.divider.layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, ceil(height + verticalPadding).roundToInt())
 
 		populateBaseView(
 			cardView = binding.divider,
-			unprocessedProperties = model.baseProperties,
+			unprocessedProperties = unprocessedModel.baseProperties,
 			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = R.color.fusion_default_divider_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_divider_view_corner_radius

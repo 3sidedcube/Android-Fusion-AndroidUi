@@ -43,14 +43,14 @@ class BulletGroupViewHolder(val binding: BulletGroupViewBinding, viewConfig: And
 		}
 	}
 
-	override fun populateView(model: BulletGroup) {
+	override fun populateView(unprocessedModel: BulletGroup) {
 		val context = itemView.context
 		binding.root.unregisterAllChildViewHolders()
 		binding.bulletGroupContainer.removeAllViews()
 
-		delegate.count = model.children.size
+		delegate.count = unprocessedModel.children.size
 
-		for (index in 0 until model.children.size) {
+		for (index in 0 until unprocessedModel.children.size) {
 			val annotateView = BulletViewHolder(
 				BulletViewBinding.inflate(
 					LayoutInflater.from(context),
@@ -59,7 +59,7 @@ class BulletGroupViewHolder(val binding: BulletGroupViewBinding, viewConfig: And
 				),
 				viewConfig
 			)
-			val annotation = model.children[index]
+			val annotation = unprocessedModel.children[index]
 			annotation.order = index + 1
 			annotateView.populateViewFromModel(annotation)
 			binding.bulletGroupContainer.addView(annotateView.itemView)
@@ -68,13 +68,13 @@ class BulletGroupViewHolder(val binding: BulletGroupViewBinding, viewConfig: And
 
 		populateBaseView(
 			cardView = binding.root,
-			unprocessedProperties = model.baseProperties,
+			unprocessedProperties = unprocessedModel.baseProperties,
 			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = R.color.fusion_default_bullet_group_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_bullet_group_view_corner_radius
 		)
 
 		//Apply padding
-		binding.bulletGroupContainer.setPadding(model.baseProperties.padding)
+		binding.bulletGroupContainer.setPadding(unprocessedModel.baseProperties.padding)
 	}
 }
