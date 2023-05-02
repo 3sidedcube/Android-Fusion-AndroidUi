@@ -9,6 +9,7 @@ import androidx.annotation.Px
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.cube.fusion.android.core.R
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.helper.ColourHelper
 import com.cube.fusion.android.core.helper.ShadowHelper
 import com.cube.fusion.android.core.utils.MarginUtils.orDefault
@@ -28,8 +29,10 @@ import kotlin.math.roundToInt
  *
  * Created by Nikos Rapousis on 12/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
+ *
+ * @param viewConfig A reference to the [AndroidFusionViewConfig] instance used for configuring views
  */
-abstract class FusionViewHolder<T : Model>(itemView: View) : RecyclerView.ViewHolder(itemView),
+abstract class FusionViewHolder<T : Model>(itemView: View, protected val viewConfig: AndroidFusionViewConfig) : RecyclerView.ViewHolder(itemView),
 	ShadowViewHolder {
 	/**
 	 * Called when the view needs to be populated

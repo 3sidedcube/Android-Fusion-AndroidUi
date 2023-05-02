@@ -7,6 +7,7 @@ import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import com.cube.fusion.android.core.R
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.BulletGroupViewBinding
 import com.cube.fusion.android.core.databinding.BulletViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
@@ -19,12 +20,12 @@ import com.cube.fusion.core.model.views.BulletGroup
  * Created by Nikos Rapousis on 16/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
-class BulletGroupViewHolder(val binding: BulletGroupViewBinding) :
-	FusionViewHolder<BulletGroup>(binding.root) {
+class BulletGroupViewHolder(val binding: BulletGroupViewBinding, viewConfig: AndroidFusionViewConfig) :
+	FusionViewHolder<BulletGroup>(binding.root, viewConfig) {
 	class Factory : FusionViewHolderFactory {
-		override fun createViewHolder(parent: ViewGroup): BulletGroupViewHolder {
+		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): BulletGroupViewHolder {
 			val binding = BulletGroupViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-			return BulletGroupViewHolder(binding)
+			return BulletGroupViewHolder(binding, viewConfig)
 		}
 	}
 
@@ -54,7 +55,8 @@ class BulletGroupViewHolder(val binding: BulletGroupViewBinding) :
 					LayoutInflater.from(context),
 					null,
 					false
-				)
+				),
+				viewConfig
 			)
 			val annotation = model.children[index]
 			annotation.order = index + 1

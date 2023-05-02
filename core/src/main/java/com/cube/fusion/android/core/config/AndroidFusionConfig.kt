@@ -1,7 +1,5 @@
 package com.cube.fusion.android.core.config
 
-import com.cube.fusion.android.core.actions.FusionAndroidActionHandler
-import com.cube.fusion.android.core.images.FusionAndroidImageLoader
 import com.cube.fusion.android.core.resolver.AndroidViewResolver
 import com.cube.fusion.core.display.FusionDisplayPopulator
 
@@ -11,14 +9,12 @@ import com.cube.fusion.core.display.FusionDisplayPopulator
  * Created by JR Mitchell on 01/March/2022.
  * Copyright ® 3SidedCube. All rights reserved.
  *
- * @param populator the config's display populator
- * @param actionHandler the config's action handler
- * @param imageLoader the config's image loader
- * @param resolvers the map of class names to view resolvers to resolve views with
+ * @param populator The config's display populator
+ * @param resolvers The map of class names to view resolvers to resolve views with
+ * @param viewConfig The configuration required for ViewHolders
  */
 open class AndroidFusionConfig(
 	val populator: FusionDisplayPopulator,
-	val actionHandler: FusionAndroidActionHandler,
-	val imageLoader: FusionAndroidImageLoader?,
-	val resolvers: MutableMap<String, AndroidViewResolver>
+	val resolvers: MutableMap<String, AndroidViewResolver>,
+	val viewConfig: AndroidFusionViewConfig
 )

@@ -7,6 +7,7 @@ import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import com.cube.fusion.android.core.R
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.BulletViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
@@ -18,9 +19,9 @@ import com.cube.fusion.core.model.views.Bullet
  * Created by Nikos Rapousis on 16/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
-class BulletViewHolder(val binding: BulletViewBinding) : FusionViewHolder<Bullet>(binding.root) {
-	private val titleViewHolder = TextViewHolder(binding.title)
-	private val subtitleViewHolder = TextViewHolder(binding.subtitle)
+class BulletViewHolder(val binding: BulletViewBinding, viewConfig: AndroidFusionViewConfig) : FusionViewHolder<Bullet>(binding.root, viewConfig) {
+	private val titleViewHolder = TextViewHolder(binding.title, viewConfig)
+	private val subtitleViewHolder = TextViewHolder(binding.subtitle, viewConfig)
 	private val delegate = BulletAccessibilityDelegateCompat(null)
 
 	init {
@@ -30,10 +31,10 @@ class BulletViewHolder(val binding: BulletViewBinding) : FusionViewHolder<Bullet
 	}
 
 	class Factory : FusionViewHolderFactory {
-		override fun createViewHolder(parent: ViewGroup): BulletViewHolder {
+		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): BulletViewHolder {
 			val binding =
 				BulletViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-			return BulletViewHolder(binding)
+			return BulletViewHolder(binding, viewConfig)
 		}
 	}
 

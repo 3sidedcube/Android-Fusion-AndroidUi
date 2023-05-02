@@ -3,6 +3,7 @@ package com.cube.fusion.android.demoapp.holder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.holder.FusionViewHolder
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
@@ -18,11 +19,11 @@ import com.squareup.picasso.Picasso
  * Created by Nikos Rapousis on 16/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
-class CardViewHolder(private val binding: CardViewBinding) : FusionViewHolder<Card>(binding.root) {
+class CardViewHolder(private val binding: CardViewBinding, viewConfig: AndroidFusionViewConfig) : FusionViewHolder<Card>(binding.root, viewConfig) {
 	class Factory : FusionViewHolderFactory {
-		override fun createViewHolder(parent: ViewGroup): CardViewHolder {
+		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): CardViewHolder {
 			val binding = CardViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-			return CardViewHolder(binding)
+			return CardViewHolder(binding, viewConfig)
 		}
 	}
 

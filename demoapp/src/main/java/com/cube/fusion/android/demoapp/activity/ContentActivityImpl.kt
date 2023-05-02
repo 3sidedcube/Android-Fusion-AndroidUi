@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.cube.fusion.android.activity.FusionContentActivity
 import com.cube.fusion.android.activity.actions.DefaultActivityActionHandlers
 import com.cube.fusion.android.core.config.AndroidFusionConfig
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.ContentFragmentViewBinding
 import com.cube.fusion.android.core.databinding.ToolbarViewBinding
 import com.cube.fusion.android.core.helper.ViewHelper
@@ -57,15 +58,17 @@ class ContentActivityImpl : FusionContentActivity() {
 		val localSource = AssetsPageSource(this, { it }, resolvers.values)
 		return AndroidFusionConfig(
 			populator = RetrofitDisplayPopulator(this::lifecycleScope, baseUrl, resolvers.values, localSource),
-			actionHandler = DefaultActivityActionHandlers { view, action ->
-				getIntent(view.context, baseUrl, action.extractClick())
-			}.apply {
-				registerNativeActionForLink(NATIVE_ACTION_KEY) { view, _ ->
-					view.context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
-				}
-			},
-			imageLoader = PicassoImageLoader,
-			resolvers = resolvers
+			resolvers = resolvers,
+			viewConfig = AndroidFusionViewConfig(
+				actionHandler = DefaultActivityActionHandlers { view, action ->
+					getIntent(view.context, baseUrl, action.extractClick())
+				}.apply {
+					registerNativeActionForLink(NATIVE_ACTION_KEY) { view, _ ->
+						view.context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+					}
+				},
+				imageLoader = PicassoImageLoader,
+			)
 		)
 	}
 

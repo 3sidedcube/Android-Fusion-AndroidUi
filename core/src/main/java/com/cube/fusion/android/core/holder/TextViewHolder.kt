@@ -12,6 +12,7 @@ import androidx.annotation.DimenRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import com.cube.fusion.android.core.R
+import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.TextViewBinding
 import com.cube.fusion.android.core.helper.ColourHelper
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
@@ -28,11 +29,11 @@ import com.cube.fusion.core.model.views.Text
  * Created by Nikos Rapousis on 10/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  */
-class TextViewHolder(private val binding: TextViewBinding) : ChildViewHolder<Text>(binding.root) {
+class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFusionViewConfig) : ChildViewHolder<Text>(binding.root, viewConfig) {
 	class Factory : FusionViewHolderFactory {
-		override fun createViewHolder(parent: ViewGroup): TextViewHolder {
+		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): TextViewHolder {
 			val binding = TextViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-			return TextViewHolder(binding)
+			return TextViewHolder(binding, viewConfig)
 		}
 	}
 
