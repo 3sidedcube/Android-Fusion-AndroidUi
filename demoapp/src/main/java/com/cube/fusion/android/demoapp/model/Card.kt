@@ -3,6 +3,7 @@ package com.cube.fusion.android.demoapp.model
 import com.cube.fusion.core.model.ImageSource
 import com.cube.fusion.core.model.Model
 import com.cube.fusion.core.model.views.BaseViewProperties
+import com.cube.fusion.core.processor.FusionDataPreprocessor
 import com.fasterxml.jackson.annotation.JsonUnwrapped
 import kotlinx.parcelize.Parcelize
 
@@ -24,4 +25,6 @@ data class Card(
 	val type: String? = null,
 	val image: ImageSource? = null,
 	@field:JsonUnwrapped val baseProperties: BaseViewProperties = BaseViewProperties()
-): Model()
+): Model() {
+	interface Preprocessor: FusionDataPreprocessor<Card>
+}

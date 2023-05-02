@@ -10,6 +10,8 @@ import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
 import com.cube.fusion.android.demoapp.R
 import com.cube.fusion.android.demoapp.databinding.CardViewBinding
 import com.cube.fusion.android.demoapp.model.Card
+import com.cube.fusion.core.model.views.BaseViewProperties
+import com.cube.fusion.core.utils.CollectionExtensions.preprocess
 import com.squareup.picasso.Picasso
 
 /**
@@ -27,7 +29,10 @@ class CardViewHolder(private val binding: CardViewBinding, viewConfig: AndroidFu
 		}
 	}
 
-	override fun populateView(model: Card) {
+	override fun populateView(unprocessedModel: Card) {
+		// Pre-process data
+		val model = viewConfig.preprocessors.filterIsInstance<Card.Preprocessor>().preprocess(unprocessedModel)
+
 		//Custom properties
 		binding.title.isVisible = model.title != null
 		binding.title.text = model.title ?: ""
@@ -45,10 +50,11 @@ class CardViewHolder(private val binding: CardViewBinding, viewConfig: AndroidFu
 
 		//Base properties
 		populateBaseView(
-			binding.root,
-			model.baseProperties,
-			android.R.color.transparent,
-			R.dimen.card_view_default_corner_radius
+			cardView = binding.root,
+			unprocessedProperties = model.baseProperties,
+			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
+			defaultBackgroundColourResId = android.R.color.transparent,
+			defaultCornerRadiusResId = R.dimen.card_view_default_corner_radius
 		)
 	}
 }
