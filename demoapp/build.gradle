@@ -58,6 +58,7 @@ dependencies {
 
 	// Image loading/populating
 	implementation 'com.squareup.picasso:picasso:2.71828'
+	implementation "io.coil-kt:coil:2.0.0"
 
 	// Parsing of JSON data with Jackson
 	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.1'
