@@ -20,6 +20,7 @@ import com.cube.fusion.android.core.utils.shadow.ShadowRectSpec
 import com.cube.fusion.core.model.Margin
 import com.cube.fusion.core.model.Model
 import com.cube.fusion.core.model.views.BaseViewProperties
+import com.cube.fusion.core.utils.CollectionExtensions.preprocess
 import com.google.android.material.card.MaterialCardView
 import kotlin.math.ceil
 import kotlin.math.roundToInt
@@ -64,17 +65,22 @@ abstract class FusionViewHolder<T : Model>(itemView: View, protected val viewCon
 	 * Does not handle padding, as this is strongly coupled with the particular view implementation (e.g the content it holds)
 	 * Padding should therefore be handled separately in the [populateView] method
 	 *
-	 * @param cardView the base [MaterialCardView] that the view is built upon
-	 * @param baseProperties the base view properties to populate the base UI with, or null - if null, uses all defaults
-	 * @param defaultBackgroundColourResId the resource ID for the default background colour of this view
-	 * @param defaultCornerRadiusResId the resource ID for the default corner radius of this view
+	 * @param cardView The base [MaterialCardView] that the view is built upon
+	 * @param unprocessedProperties The unprocessed base view properties to populate the base UI with, or null - if null, uses all defaults
+	 * @param preprocessors A list of pre-processing steps to apply to the unprocessed base properties before populating UI
+	 * @param defaultBackgroundColourResId The resource ID for the default background colour of this view
+	 * @param defaultCornerRadiusResId The resource ID for the default corner radius of this view
 	 */
 	protected fun populateBaseView(
 		cardView: MaterialCardView,
-		baseProperties: BaseViewProperties?,
+		unprocessedProperties: BaseViewProperties?,
+		preprocessors: List<BaseViewProperties.Preprocessor>,
 		@ColorRes defaultBackgroundColourResId: Int,
 		@DimenRes defaultCornerRadiusResId: Int
 	) {
+		// Data preprocessing
+		val baseProperties = unprocessedProperties?.let { preprocessors.preprocess(it) }
+
 		val theme = cardView.context.theme
 		val resources = cardView.resources
 

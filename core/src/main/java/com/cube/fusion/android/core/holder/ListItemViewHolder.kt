@@ -8,6 +8,7 @@ import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.ListItemViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
+import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.ListItem
 
 /**
@@ -44,10 +45,11 @@ class ListItemViewHolder(private val binding: ListItemViewBinding, viewConfig: A
 		subtitleViewHolder.populateChildView(model.subtitle)
 
 		populateBaseView(
-			binding.cardContainer,
-			model.baseProperties,
-			R.color.fusion_default_list_item_view_background_colour,
-			R.dimen.fusion_default_list_item_view_corner_radius
+			cardView = binding.cardContainer,
+			unprocessedProperties = model.baseProperties,
+			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
+			defaultBackgroundColourResId = R.color.fusion_default_list_item_view_background_colour,
+			defaultCornerRadiusResId = R.dimen.fusion_default_list_item_view_corner_radius
 		)
 
 		//Apply padding

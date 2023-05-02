@@ -10,6 +10,7 @@ import com.cube.fusion.android.core.databinding.ImageViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
 import com.cube.fusion.android.core.utils.extensions.dpToPx
+import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.Image
 
 /**
@@ -50,10 +51,11 @@ class ImageViewHolder(private val binding: ImageViewBinding, viewConfig: Android
 		}
 
 		populateBaseView(
-			binding.imageContainer,
-			image?.baseProperties,
-			defaultBgColour,
-			R.dimen.fusion_default_image_view_corner_radius
+			cardView = binding.imageContainer,
+			unprocessedProperties = image?.baseProperties,
+			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
+			defaultBackgroundColourResId = defaultBgColour,
+			defaultCornerRadiusResId = R.dimen.fusion_default_image_view_corner_radius
 		)
 	}
 

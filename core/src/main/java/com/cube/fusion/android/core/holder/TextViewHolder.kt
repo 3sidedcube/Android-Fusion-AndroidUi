@@ -21,6 +21,7 @@ import com.cube.fusion.android.core.utils.extensions.asGravity
 import com.cube.fusion.android.core.utils.extensions.getDimenOrEms
 import com.cube.fusion.android.core.utils.extensions.resolveAsTypeface
 import com.cube.fusion.android.core.utils.extensions.toTypeface
+import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.Text
 
 /**
@@ -121,7 +122,8 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 
 		populateBaseView(
 			cardView = binding.textContainer,
-			baseProperties = textModel?.baseProperties,
+			unprocessedProperties = textModel?.baseProperties,
+			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = defaultBgColour,
 			defaultCornerRadiusResId = defaultCornerRadius
 		)

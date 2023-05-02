@@ -7,6 +7,7 @@ import com.cube.fusion.android.core.R
 import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.TextViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
+import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.Button
 
 /**
@@ -34,7 +35,8 @@ class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionVi
 		)
 		populateBaseView(
 			cardView = binding.textContainer,
-			baseProperties = model.baseProperties.baseProperties,
+			unprocessedProperties = model.baseProperties.baseProperties,
+			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = R.color.fusion_default_button_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_button_view_corner_radius
 		)
@@ -52,7 +54,8 @@ class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionVi
 		)
 		populateBaseView(
 			cardView = binding.textContainer,
-			baseProperties = model?.baseProperties?.baseProperties,
+			unprocessedProperties = model?.baseProperties?.baseProperties,
+			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
 			defaultBackgroundColourResId = android.R.color.transparent,
 			defaultCornerRadiusResId = R.dimen.fusion_default_button_view_corner_radius
 		)

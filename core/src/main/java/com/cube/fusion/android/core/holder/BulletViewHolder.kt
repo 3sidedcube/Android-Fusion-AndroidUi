@@ -11,6 +11,7 @@ import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.BulletViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
+import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.Bullet
 
 /**
@@ -59,10 +60,11 @@ class BulletViewHolder(val binding: BulletViewBinding, viewConfig: AndroidFusion
 		delegate.model = model
 
 		populateBaseView(
-			binding.cardContainer,
-			model.baseProperties,
-			R.color.fusion_default_bullet_view_background_colour,
-			R.dimen.fusion_default_bullet_view_corner_radius
+			cardView = binding.cardContainer,
+			unprocessedProperties = model.baseProperties,
+			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
+			defaultBackgroundColourResId = R.color.fusion_default_bullet_view_background_colour,
+			defaultCornerRadiusResId = R.dimen.fusion_default_bullet_view_corner_radius
 		)
 
 		//Apply padding
