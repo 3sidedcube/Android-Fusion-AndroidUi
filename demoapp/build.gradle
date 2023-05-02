@@ -52,7 +52,7 @@ dependencies {
 	implementation "com.github.3sidedcube.Android-Fusion-Core:populator-retrofit:${project.fusionLibVersion}"
 
 	// Same-repo Fusion dependencies
-	def currentLibVersion = "18be4df3c8"
+	def currentLibVersion = "e3c7849631"
 	implementation "com.github.3sidedcube.Android-Fusion-AndroidUi:core:$currentLibVersion"
 	implementation "com.github.3sidedcube.Android-Fusion-AndroidUi:activity:$currentLibVersion"
 
