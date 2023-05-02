@@ -21,8 +21,8 @@ import com.cube.fusion.core.model.Border
 import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.ListItem
 import com.cube.fusion.core.model.views.Text
-import com.cube.fusion.populator.coroutinesourcecache.CoroutineSourceCachePopulator
 import com.cube.fusion.populator.coroutinesourcecache.source.AssetsPageSource
+import com.cube.fusion.populator.retrofit.RetrofitDisplayPopulator
 
 /**
  * Content Activity implementation for the demo of Fusion AndroidUi
@@ -61,7 +61,7 @@ class ContentActivityImpl : FusionContentActivity() {
 		}
 		val localSource = AssetsPageSource(this, { it }, resolvers.values)
 		return AndroidFusionConfig(
-			populator = CoroutineSourceCachePopulator(this::lifecycleScope, localSource),
+			populator = RetrofitDisplayPopulator(this::lifecycleScope, baseUrl, resolvers.values, localSource),
 			resolvers = resolvers,
 			viewConfig = AndroidFusionViewConfig(
 				actionHandler = DefaultActivityActionHandlers { view, action ->
