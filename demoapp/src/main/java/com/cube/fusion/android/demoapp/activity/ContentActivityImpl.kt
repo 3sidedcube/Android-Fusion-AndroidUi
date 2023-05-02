@@ -17,6 +17,7 @@ import com.cube.fusion.android.demoapp.databinding.ActivityFusionImplBinding
 import com.cube.fusion.android.demoapp.holder.CardViewHolder
 import com.cube.fusion.android.demoapp.images.PicassoImageLoader
 import com.cube.fusion.android.demoapp.model.Card
+import com.cube.fusion.core.model.views.Text
 import com.cube.fusion.populator.coroutinesourcecache.source.AssetsPageSource
 import com.cube.fusion.populator.retrofit.RetrofitDisplayPopulator
 
@@ -68,7 +69,14 @@ class ContentActivityImpl : FusionContentActivity() {
 					}
 				},
 				imageLoader = PicassoImageLoader,
-			)
+				preprocessors = listOf(
+					object : Text.Preprocessor {
+						override fun preprocess(data: Text) = data.copy(
+							textColor = "#A2A2FF"
+						)
+					}
+				)
+			),
 		)
 	}
 
