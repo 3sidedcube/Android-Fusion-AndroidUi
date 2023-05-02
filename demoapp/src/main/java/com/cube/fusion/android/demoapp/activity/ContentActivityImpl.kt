@@ -17,9 +17,12 @@ import com.cube.fusion.android.demoapp.databinding.ActivityFusionImplBinding
 import com.cube.fusion.android.demoapp.holder.CardViewHolder
 import com.cube.fusion.android.demoapp.images.PicassoImageLoader
 import com.cube.fusion.android.demoapp.model.Card
+import com.cube.fusion.core.model.Border
+import com.cube.fusion.core.model.views.BaseViewProperties
+import com.cube.fusion.core.model.views.ListItem
 import com.cube.fusion.core.model.views.Text
+import com.cube.fusion.populator.coroutinesourcecache.CoroutineSourceCachePopulator
 import com.cube.fusion.populator.coroutinesourcecache.source.AssetsPageSource
-import com.cube.fusion.populator.retrofit.RetrofitDisplayPopulator
 
 /**
  * Content Activity implementation for the demo of Fusion AndroidUi
@@ -58,7 +61,7 @@ class ContentActivityImpl : FusionContentActivity() {
 		}
 		val localSource = AssetsPageSource(this, { it }, resolvers.values)
 		return AndroidFusionConfig(
-			populator = RetrofitDisplayPopulator(this::lifecycleScope, baseUrl, resolvers.values, localSource),
+			populator = CoroutineSourceCachePopulator(this::lifecycleScope, localSource),
 			resolvers = resolvers,
 			viewConfig = AndroidFusionViewConfig(
 				actionHandler = DefaultActivityActionHandlers { view, action ->
@@ -73,6 +76,23 @@ class ContentActivityImpl : FusionContentActivity() {
 					object : Text.Preprocessor {
 						override fun preprocess(data: Text) = data.copy(
 							textColor = "#A2A2FF"
+						)
+					},
+					object : ListItem.Preprocessor {
+						private fun withoutBorder(text: Text?) = text?.let {
+							it.copy(baseProperties = it.baseProperties.copy(border = Border(strokeWidth = 0f, color = "#00000000")))
+						}
+
+						override fun preprocess(data: ListItem): ListItem = data.copy(
+							title = withoutBorder(data.title),
+							subtitle = withoutBorder(data.subtitle)
+						)
+					},
+					object: BaseViewProperties.Preprocessor {
+						override fun preprocess(data: BaseViewProperties) = data.copy(
+							backgroundColor = data.backgroundColor ?: "#EDEDED",
+							cornerRadius = data.cornerRadius ?: 5f,
+							border = data.border ?: Border(strokeWidth = 1f, color = "#BDBDBD")
 						)
 					}
 				)
