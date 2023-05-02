@@ -35,6 +35,19 @@
 					"bottom": 5
 				},
 				"background_color": "#DDEEFF"
+			},
+			{
+				"class": "Button",
+				"content": "This is a button that does nothing!",
+				"margin": {
+					"left": 5,
+					"right": 5,
+					"top": 5,
+					"bottom": 5
+				},
+				"font": {
+					"size": 14
+				}
 			}
 		]
 	}
