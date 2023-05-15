@@ -63,12 +63,10 @@ class ContentActivityImpl : FusionContentActivity() {
 		}
 		val localSource = AssetsPageSource(this, { it }, resolvers.values)
 		val preprocessors = FusionDataPreprocessorCollection()
-		preprocessors[Text::class] = object : FusionDataPreprocessor<Text> {
-			override fun preprocess(data: Text): Text {
-				return data.copy(
-					textColor = "#A2A2FF"
-				)
-			}
+		preprocessors[Text::class] = FusionDataPreprocessor { data ->
+			data.copy(
+				textColor = "#A2A2FF"
+			)
 		}
 		preprocessors[ListItem::class] = object : FusionDataPreprocessor<ListItem> {
 			private fun withoutBorder(text: Text?) = text?.let {
@@ -80,8 +78,8 @@ class ContentActivityImpl : FusionContentActivity() {
 				subtitle = withoutBorder(data.subtitle)
 			)
 		}
-		preprocessors[BaseViewProperties::class] = object : FusionDataPreprocessor<BaseViewProperties> {
-			override fun preprocess(data: BaseViewProperties) = data.copy(
+		preprocessors[BaseViewProperties::class] = FusionDataPreprocessor { data ->
+			data.copy(
 				backgroundColor = data.backgroundColor ?: "#EDEDED",
 				cornerRadius = data.cornerRadius ?: 5f,
 				border = data.border ?: Border(strokeWidth = 1f, color = "#BDBDBD")
