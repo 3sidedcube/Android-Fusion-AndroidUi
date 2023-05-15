@@ -12,6 +12,7 @@ import com.cube.fusion.android.core.images.ImageLoadingManager
 import com.cube.fusion.android.fragment.FusionContentFragment
 import com.cube.fusion.android.fragment.R
 import com.cube.fusion.android.fragment.factory.FusionContentFragmentFactory
+import com.cube.fusion.core.processor.FusionDataPreprocessorCollection
 import com.cube.fusion.populator.legacy.LegacyDisplayPopulator
 
 /**
@@ -36,7 +37,7 @@ class LegacyContentActivity : AppCompatActivity() {
 		viewConfig = AndroidFusionViewConfig(
 			actionHandler = DefaultActivityActionHandlers(LegacyContentActivity::class.java),
 			imageLoader = ImageLoadingManager.imageLoader,
-			preprocessors = emptyList()
+			preprocessors = FusionDataPreprocessorCollection()
 		)
 	)
 	private val fragmentFactory = FusionContentFragmentFactory(fusionConfig)
