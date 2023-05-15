@@ -21,6 +21,8 @@ import com.cube.fusion.core.model.Border
 import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.ListItem
 import com.cube.fusion.core.model.views.Text
+import com.cube.fusion.core.processor.FusionDataPreprocessor
+import com.cube.fusion.core.processor.FusionDataPreprocessorCollection
 import com.cube.fusion.populator.coroutinesourcecache.source.AssetsPageSource
 import com.cube.fusion.populator.retrofit.RetrofitDisplayPopulator
 
@@ -60,6 +62,31 @@ class ContentActivityImpl : FusionContentActivity() {
 			put("Card", DefaultViewResolver(Card::class.java, CardViewHolder.Factory::class.java))
 		}
 		val localSource = AssetsPageSource(this, { it }, resolvers.values)
+		val preprocessors = FusionDataPreprocessorCollection()
+		preprocessors[Text::class] = object : FusionDataPreprocessor<Text> {
+			override fun preprocess(data: Text): Text {
+				return data.copy(
+					textColor = "#A2A2FF"
+				)
+			}
+		}
+		preprocessors[ListItem::class] = object : FusionDataPreprocessor<ListItem> {
+			private fun withoutBorder(text: Text?) = text?.let {
+				it.copy(baseProperties = it.baseProperties.copy(border = Border(strokeWidth = 0f, color = "#00000000")))
+			}
+
+			override fun preprocess(data: ListItem): ListItem = data.copy(
+				title = withoutBorder(data.title),
+				subtitle = withoutBorder(data.subtitle)
+			)
+		}
+		preprocessors[BaseViewProperties::class] = object : FusionDataPreprocessor<BaseViewProperties> {
+			override fun preprocess(data: BaseViewProperties) = data.copy(
+				backgroundColor = data.backgroundColor ?: "#EDEDED",
+				cornerRadius = data.cornerRadius ?: 5f,
+				border = data.border ?: Border(strokeWidth = 1f, color = "#BDBDBD")
+			)
+		}
 		return AndroidFusionConfig(
 			populator = RetrofitDisplayPopulator(this::lifecycleScope, baseUrl, resolvers.values, localSource),
 			resolvers = resolvers,
@@ -72,30 +99,7 @@ class ContentActivityImpl : FusionContentActivity() {
 					}
 				},
 				imageLoader = PicassoImageLoader,
-				preprocessors = listOf(
-					object : Text.Preprocessor {
-						override fun preprocess(data: Text) = data.copy(
-							textColor = "#A2A2FF"
-						)
-					},
-					object : ListItem.Preprocessor {
-						private fun withoutBorder(text: Text?) = text?.let {
-							it.copy(baseProperties = it.baseProperties.copy(border = Border(strokeWidth = 0f, color = "#00000000")))
-						}
-
-						override fun preprocess(data: ListItem): ListItem = data.copy(
-							title = withoutBorder(data.title),
-							subtitle = withoutBorder(data.subtitle)
-						)
-					},
-					object: BaseViewProperties.Preprocessor {
-						override fun preprocess(data: BaseViewProperties) = data.copy(
-							backgroundColor = data.backgroundColor ?: "#EDEDED",
-							cornerRadius = data.cornerRadius ?: 5f,
-							border = data.border ?: Border(strokeWidth = 1f, color = "#BDBDBD")
-						)
-					}
-				)
+				preprocessors = preprocessors
 			),
 		)
 	}
