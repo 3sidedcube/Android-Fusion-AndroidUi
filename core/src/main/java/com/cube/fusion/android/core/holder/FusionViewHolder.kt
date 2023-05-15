@@ -20,7 +20,7 @@ import com.cube.fusion.android.core.utils.shadow.ShadowRectSpec
 import com.cube.fusion.core.model.Margin
 import com.cube.fusion.core.model.Model
 import com.cube.fusion.core.model.views.BaseViewProperties
-import com.cube.fusion.core.utils.CollectionExtensions.preprocess
+import com.cube.fusion.core.processor.FusionDataPreprocessorCollection
 import com.google.android.material.card.MaterialCardView
 import kotlin.math.ceil
 import kotlin.math.roundToInt
@@ -74,12 +74,12 @@ abstract class FusionViewHolder<T : Model>(itemView: View, protected val viewCon
 	protected fun populateBaseView(
 		cardView: MaterialCardView,
 		unprocessedProperties: BaseViewProperties?,
-		preprocessors: List<BaseViewProperties.Preprocessor>,
+		preprocessors: FusionDataPreprocessorCollection,
 		@ColorRes defaultBackgroundColourResId: Int,
 		@DimenRes defaultCornerRadiusResId: Int
 	) {
 		// Data preprocessing
-		val baseProperties = unprocessedProperties?.let { preprocessors.preprocess(it) }
+		val baseProperties = unprocessedProperties?.let { preprocessors.preprocess(BaseViewProperties::class, it) }
 
 		val theme = cardView.context.theme
 		val resources = cardView.resources
