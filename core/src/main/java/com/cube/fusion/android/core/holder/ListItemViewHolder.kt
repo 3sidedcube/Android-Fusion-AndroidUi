@@ -8,9 +8,7 @@ import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.ListItemViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
-import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.ListItem
-import com.cube.fusion.core.utils.CollectionExtensions.preprocess
 
 /**
  * [FusionViewHolder] implementation to represent the [ListItem] view
@@ -42,7 +40,7 @@ class ListItemViewHolder(private val binding: ListItemViewBinding, viewConfig: A
 
 	override fun populateView(unprocessedModel: ListItem) {
 		// Data preprocessing
-		val model = viewConfig.preprocessors.filterIsInstance<ListItem.Preprocessor>().preprocess(unprocessedModel)
+		val model = viewConfig.preprocessors.preprocess(ListItem::class, unprocessedModel)
 		
 		imageViewHolder.populateChildView(model.image)
 		titleViewHolder.populateChildView( model.title)
@@ -51,7 +49,7 @@ class ListItemViewHolder(private val binding: ListItemViewBinding, viewConfig: A
 		populateBaseView(
 			cardView = binding.cardContainer,
 			unprocessedProperties = model.baseProperties,
-			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
+			preprocessors = viewConfig.preprocessors,
 			defaultBackgroundColourResId = R.color.fusion_default_list_item_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_list_item_view_corner_radius
 		)

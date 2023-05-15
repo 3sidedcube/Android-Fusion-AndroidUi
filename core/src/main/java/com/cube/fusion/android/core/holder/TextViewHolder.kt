@@ -21,9 +21,8 @@ import com.cube.fusion.android.core.utils.extensions.asGravity
 import com.cube.fusion.android.core.utils.extensions.getDimenOrEms
 import com.cube.fusion.android.core.utils.extensions.resolveAsTypeface
 import com.cube.fusion.android.core.utils.extensions.toTypeface
-import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.Text
-import com.cube.fusion.core.utils.CollectionExtensions.preprocess
+import com.cube.fusion.core.processor.FusionDataPreprocessorCollection
 
 /**
  * [FusionViewHolder] implementation to represent the [Text] view
@@ -52,9 +51,9 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 		 * @param defaultLetterSpacing The resource ID for the default letter spacing to set if no other letter spacing is specified on the model
 		 * @param defaultGravity The default gravity to set if no other gravity is specified on the model
 		 */
-		fun populateView(textView: TextView, unprocessedModel: Text?, preprocessors: List<Text.Preprocessor>, @DimenRes defaultTextSize: Int, @ColorRes defaultTextColour: Int, @DimenRes defaultLetterSpacing: Int, defaultGravity: Int) {
+		fun populateView(textView: TextView, unprocessedModel: Text?, preprocessors: FusionDataPreprocessorCollection, @DimenRes defaultTextSize: Int, @ColorRes defaultTextColour: Int, @DimenRes defaultLetterSpacing: Int, defaultGravity: Int) {
 			// Data pre-processing
-			val textModel = unprocessedModel?.let { preprocessors.preprocess(it) }
+			val textModel = unprocessedModel?.let { preprocessors.preprocess(Text::class, it) }
 
 			populateView(
 				textView = textView,
@@ -140,8 +139,8 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 	 */
 	fun populateView(unprocessedModel: Text?, @ColorRes defaultBgColour: Int, @DimenRes defaultCornerRadius: Int, @DimenRes defaultTextSize : Int, @ColorRes defaultTextColour : Int, @DimenRes defaultLetterSpacing : Int, defaultGravity: Int) {
 		// Data pre-processing
-		val preprocessors = viewConfig.preprocessors.filterIsInstance<Text.Preprocessor>()
-		val textModel = unprocessedModel?.let { preprocessors.preprocess(it) }
+		val preprocessors = viewConfig.preprocessors
+		val textModel = unprocessedModel?.let { preprocessors.preprocess(Text::class, it) }
 
 		populateView(
 			textView = binding.text,
@@ -155,7 +154,7 @@ class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFu
 		populateBaseView(
 			cardView = binding.textContainer,
 			unprocessedProperties = textModel?.baseProperties,
-			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
+			preprocessors = viewConfig.preprocessors,
 			defaultBackgroundColourResId = defaultBgColour,
 			defaultCornerRadiusResId = defaultCornerRadius
 		)

@@ -8,9 +8,7 @@ import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.DividerViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.extensions.dpToPx
-import com.cube.fusion.core.model.views.BaseViewProperties
 import com.cube.fusion.core.model.views.Divider
-import com.cube.fusion.core.utils.CollectionExtensions.preprocess
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
@@ -36,7 +34,7 @@ class DividerViewHolder(private val binding: DividerViewBinding, viewConfig: And
 	 */
 	override fun populateView(unprocessedModel: Divider) {
 		// Data preprocessing
-		val model = viewConfig.preprocessors.filterIsInstance<Divider.Preprocessor>().preprocess(unprocessedModel)
+		val model = viewConfig.preprocessors.preprocess(Divider::class, unprocessedModel)
 		
 		val height = model.strokeWidth?.let {
 			itemView.resources.dpToPx(it)
@@ -49,7 +47,7 @@ class DividerViewHolder(private val binding: DividerViewBinding, viewConfig: And
 		populateBaseView(
 			cardView = binding.divider,
 			unprocessedProperties = model.baseProperties,
-			preprocessors = viewConfig.preprocessors.filterIsInstance<BaseViewProperties.Preprocessor>(),
+			preprocessors = viewConfig.preprocessors,
 			defaultBackgroundColourResId = R.color.fusion_default_divider_view_background_colour,
 			defaultCornerRadiusResId = R.dimen.fusion_default_divider_view_corner_radius
 		)
