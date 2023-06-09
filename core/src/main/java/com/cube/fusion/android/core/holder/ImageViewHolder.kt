@@ -2,6 +2,7 @@ package com.cube.fusion.android.core.holder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.annotation.ColorRes
 import androidx.core.view.isVisible
 import com.cube.fusion.android.core.R
@@ -9,6 +10,7 @@ import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.ImageViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
+import com.cube.fusion.android.core.utils.SizeUtils.fromDpToPx
 import com.cube.fusion.android.core.utils.extensions.dpToPx
 import com.cube.fusion.core.model.views.Image
 
@@ -37,6 +39,16 @@ class ImageViewHolder(private val binding: ImageViewBinding, viewConfig: Android
 		binding.image.apply {
 			isVisible = image?.src?.url != null
 			viewConfig.imageLoader?.loadImage(image, this)
+
+			// Apply size
+			val size = image?.fixedSize
+			if(size == null) {
+				layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+			} else {
+				size.fromDpToPx(resources).run {
+					layoutParams = LinearLayout.LayoutParams(width, height)
+				}
+			}
 
 			//Apply padding
 			setPadding(image?.baseProperties?.padding)
