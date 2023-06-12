@@ -1,6 +1,7 @@
 package com.cube.fusion.android.core.utils
 
 import android.content.res.Resources
+import android.graphics.Rect
 import android.view.View
 import com.cube.fusion.android.core.R
 import com.cube.fusion.android.core.utils.extensions.dpToPx
@@ -36,6 +37,20 @@ object PaddingUtils {
 	 * @param dp the DP value to convert to padding pixels
 	 */
 	private fun Resources.dpToPadding(dp: Float) = ceil(dpToPx(dp)).roundToInt()
+
+	/**
+	 * Gets the values of a [Padding] in screen pixels, interpreting its values as initially in DP
+	 * @param resources The resources to use in order to convert DP to pixels
+	 */
+	fun Padding?.fromDpToPx(resources: Resources): Rect {
+		val paddingOrDef = this ?: Padding.default(resources)
+		return Rect(
+			resources.dpToPadding(paddingOrDef.left),
+			resources.dpToPadding(paddingOrDef.top),
+			resources.dpToPadding(paddingOrDef.right),
+			resources.dpToPadding(paddingOrDef.bottom)
+		)
+	}
 
 	/**
 	 * Convenience extension fun to set the padding of a [View] based on an instance of [Padding]
