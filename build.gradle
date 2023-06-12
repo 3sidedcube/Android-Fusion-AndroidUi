@@ -36,7 +36,7 @@ def withConsistentVersioning(requiredVersion) {
 ext {
 	// Do not remove the call to withConsistentVersioning - this ensures that versions for all Fusion libs are aligned.
 	// Instead, update the argument passed to withConsistentVersioning to the target lib version
-	fusionLibVersion = withConsistentVersioning('7888ec37b8')
+	fusionLibVersion = withConsistentVersioning('v0.0.4-alpha1')
 }
 
 task clean(type: Delete) {
