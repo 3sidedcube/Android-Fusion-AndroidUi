@@ -1,5 +1,6 @@
 package com.cube.fusion.android.core.holder
 
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -46,7 +47,7 @@ class ImageViewHolder(private val binding: ImageViewBinding, viewConfig: Android
 				layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 			} else {
 				size.fromDpToPx(resources).run {
-					layoutParams = LinearLayout.LayoutParams(width, height)
+					layoutParams = LinearLayout.LayoutParams(width, height, 1f).apply { gravity = Gravity.CENTER }
 				}
 			}
 
