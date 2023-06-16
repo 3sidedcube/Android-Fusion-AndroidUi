@@ -1,14 +1,17 @@
 package com.cube.fusion.android.core.holder
 
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.annotation.ColorRes
 import androidx.core.view.isVisible
 import com.cube.fusion.android.core.R
 import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.databinding.ImageViewBinding
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
-import com.cube.fusion.android.core.utils.PaddingUtils.setPadding
+import com.cube.fusion.android.core.utils.PaddingUtils.fromDpToPx
+import com.cube.fusion.android.core.utils.SizeUtils.fromDpToPx
 import com.cube.fusion.android.core.utils.extensions.dpToPx
 import com.cube.fusion.core.model.views.Image
 
@@ -38,8 +41,27 @@ class ImageViewHolder(private val binding: ImageViewBinding, viewConfig: Android
 			isVisible = image?.src?.url != null
 			viewConfig.imageLoader?.loadImage(image, this)
 
+			val paddingRect = image?.baseProperties?.padding.fromDpToPx(resources)
+
+			// Apply size
+			val size = image?.fixedSize
+			if(size == null) {
+				layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+			} else {
+				size.fromDpToPx(resources).run {
+					val fullWidth = width + paddingRect.left + paddingRect.right
+					val fullHeight = height + paddingRect.top + paddingRect.bottom
+					layoutParams = LinearLayout.LayoutParams(fullWidth, fullHeight, 1f).apply { gravity = Gravity.CENTER }
+				}
+			}
+
 			//Apply padding
-			setPadding(image?.baseProperties?.padding)
+			setPadding(
+				paddingRect.left,
+				paddingRect.top,
+				paddingRect.right,
+				paddingRect.bottom
+			)
 
 			//Apply corner radius to inner image as well
 			val cornerRadius = image?.baseProperties?.cornerRadius?.let {

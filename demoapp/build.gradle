@@ -32,6 +32,19 @@ android {
 	}
 	buildFeatures {
 		viewBinding true
+		buildConfig true
+	}
+
+	flavorDimensions "samerepo"
+	productFlavors {
+		local {
+			dimension "samerepo"
+			buildConfigField "boolean", "USING_LOCAL_REPO", "true"
+		}
+		jitpack {
+			dimension "samerepo"
+			buildConfigField "boolean", "USING_LOCAL_REPO", "false"
+		}
 	}
 }
 
@@ -52,12 +65,14 @@ dependencies {
 	implementation "com.github.3sidedcube.Android-Fusion-Core:populator-retrofit:${project.fusionLibVersion}"
 
 	// Same-repo Fusion dependencies
-	def currentLibVersion = "18be4df3c8"
-	implementation "com.github.3sidedcube.Android-Fusion-AndroidUi:core:$currentLibVersion"
-	implementation "com.github.3sidedcube.Android-Fusion-AndroidUi:activity:$currentLibVersion"
+	def currentLibVersion = "v0.0.4-alpha1"
+	localImplementation project(":core")
+	localImplementation project(":activity")
+	jitpackImplementation "com.github.3sidedcube.Android-Fusion-AndroidUi:core:$currentLibVersion"
+	jitpackImplementation "com.github.3sidedcube.Android-Fusion-AndroidUi:activity:$currentLibVersion"
 
 	// Image loading/populating
-	implementation 'com.squareup.picasso:picasso:2.71828'
+	implementation "io.coil-kt:coil:2.0.0"
 
 	// Parsing of JSON data with Jackson
 	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.1'

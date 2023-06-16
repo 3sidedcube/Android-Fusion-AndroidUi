@@ -13,9 +13,10 @@ import com.cube.fusion.android.core.databinding.ContentFragmentViewBinding
 import com.cube.fusion.android.core.databinding.ToolbarViewBinding
 import com.cube.fusion.android.core.helper.ViewHelper
 import com.cube.fusion.android.core.resolver.DefaultViewResolver
+import com.cube.fusion.android.demoapp.BuildConfig
 import com.cube.fusion.android.demoapp.databinding.ActivityFusionImplBinding
 import com.cube.fusion.android.demoapp.holder.CardViewHolder
-import com.cube.fusion.android.demoapp.images.PicassoImageLoader
+import com.cube.fusion.android.demoapp.images.CoilImageLoader
 import com.cube.fusion.android.demoapp.model.Card
 import com.cube.fusion.populator.coroutinesourcecache.source.AssetsPageSource
 import com.cube.fusion.populator.retrofit.RetrofitDisplayPopulator
@@ -67,7 +68,7 @@ class ContentActivityImpl : FusionContentActivity() {
 						view.context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
 					}
 				},
-				imageLoader = PicassoImageLoader,
+				imageLoader = CoilImageLoader,
 			)
 		)
 	}
@@ -98,7 +99,12 @@ class ContentActivityImpl : FusionContentActivity() {
 	 * The @Suppress annotation would not be needed on an actual project.
 	 */
 	private fun setUpSubBindings() {
-		contentBinding = ContentFragmentViewBinding.bind(binding.pageContent)
-		toolbarBinding = ToolbarViewBinding.bind(binding.toolbar)
+		if(BuildConfig.USING_LOCAL_REPO) {
+			contentBinding = binding.pageContent
+			toolbarBinding = binding.toolbar
+		} else {
+			contentBinding = ContentFragmentViewBinding.bind(binding.pageContent)
+			toolbarBinding = ToolbarViewBinding.bind(binding.toolbar)
+		}
 	}
 }
