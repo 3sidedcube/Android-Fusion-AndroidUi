@@ -13,7 +13,7 @@ import com.cube.fusion.core.model.Model
  * @param view the view to resolve to
  * @param viewHolder the holder to resolve to
  */
-class DefaultViewResolver(var view: Class<out Model?>, viewHolder: Class<out FusionViewHolderFactory?>?) : AndroidViewResolver {
+class DefaultViewResolver(val view: Class<out Model?>, viewHolder: Class<out FusionViewHolderFactory?>?) : AndroidViewResolver {
 	override val viewHolderFactory = viewHolder?.newInstance()
 
 	override fun resolveView(): Class<out Model?> {
