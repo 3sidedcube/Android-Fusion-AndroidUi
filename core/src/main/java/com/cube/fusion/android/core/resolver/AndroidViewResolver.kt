@@ -10,5 +10,5 @@ import com.cube.fusion.core.resolver.ViewResolver
  * Copyright ® 3SidedCube. All rights reserved.
  */
 interface AndroidViewResolver : ViewResolver {
-	fun resolveViewHolder(): Class<out FusionViewHolderFactory?>?
+	fun resolveViewHolder(): FusionViewHolderFactory?
 }

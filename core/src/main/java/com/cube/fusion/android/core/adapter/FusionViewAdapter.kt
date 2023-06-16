@@ -141,8 +141,8 @@ class FusionViewAdapter(
 	override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): FusionViewHolder<*> {
 		val holder: FusionViewHolder<*>
 		try {
-			val holderFactory = resolvers[resolverOrder[viewType]]!!.resolveViewHolder()!!.getConstructor().newInstance()!!
-			holder = holderFactory.createViewHolder(viewGroup, viewConfig)!!
+			val holderFactory = resolvers[resolverOrder[viewType]]!!.resolveViewHolder()
+			holder = holderFactory!!.createViewHolder(viewGroup, viewConfig)!!
 		}
 		catch (e: Exception) {
 			throw IllegalStateException("Could not instantiate a new holder" + e.message, e)
