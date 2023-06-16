@@ -22,7 +22,7 @@ import com.cube.fusion.core.model.views.BulletGroup
  */
 class BulletGroupViewHolder(val binding: BulletGroupViewBinding, viewConfig: AndroidFusionViewConfig) :
 	FusionViewHolder<BulletGroup>(binding.root, viewConfig) {
-	class Factory : FusionViewHolderFactory {
+	class Factory : FusionViewHolderFactory<BulletGroup> {
 		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): BulletGroupViewHolder {
 			val binding = BulletGroupViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 			return BulletGroupViewHolder(binding, viewConfig)

@@ -20,7 +20,7 @@ import com.cube.fusion.core.model.views.Image
  * Copyright ® 3SidedCube. All rights reserved.
  */
 class CardViewHolder(private val binding: CardViewBinding, viewConfig: AndroidFusionViewConfig) : FusionViewHolder<Card>(binding.root, viewConfig) {
-	class Factory : FusionViewHolderFactory {
+	class Factory : FusionViewHolderFactory<Card> {
 		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): CardViewHolder {
 			val binding = CardViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 			return CardViewHolder(binding, viewConfig)

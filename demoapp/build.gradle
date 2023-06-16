@@ -65,7 +65,7 @@ dependencies {
 	implementation "com.github.3sidedcube.Android-Fusion-Core:populator-retrofit:${project.fusionLibVersion}"
 
 	// Same-repo Fusion dependencies
-	def currentLibVersion = "v0.0.4-alpha1"
+	def currentLibVersion = "v0.0.4-alpha2"
 	localImplementation project(":core")
 	localImplementation project(":activity")
 	jitpackImplementation "com.github.3sidedcube.Android-Fusion-AndroidUi:core:$currentLibVersion"

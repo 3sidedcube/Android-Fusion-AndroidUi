@@ -17,12 +17,12 @@ import com.cube.fusion.core.model.views.*
 object ViewHelper {
 	fun getDefaultViewResolvers(): MutableMap<String, AndroidViewResolver> = hashMapOf(
 		"Screen" to DefaultViewResolver(Screen::class.java, null),
-		"Text" to DefaultViewResolver(Text::class.java, TextViewHolder.Factory::class.java),
-		"Image" to DefaultViewResolver(Image::class.java, ImageViewHolder.Factory::class.java),
-		"Divider" to DefaultViewResolver(Divider::class.java, DividerViewHolder.Factory::class.java),
-		"ListItem" to DefaultViewResolver(ListItem::class.java, ListItemViewHolder.Factory::class.java),
-		"Button" to DefaultViewResolver(Button::class.java, ButtonViewHolder.Factory::class.java),
-		"BulletGroup" to DefaultViewResolver(BulletGroup::class.java, BulletGroupViewHolder.Factory::class.java),
-		"Bullet" to DefaultViewResolver(Bullet::class.java, BulletViewHolder.Factory::class.java)
+		"Text" to DefaultViewResolver(Text::class.java, TextViewHolder.Factory()),
+		"Image" to DefaultViewResolver(Image::class.java, ImageViewHolder.Factory()),
+		"Divider" to DefaultViewResolver(Divider::class.java, DividerViewHolder.Factory()),
+		"ListItem" to DefaultViewResolver(ListItem::class.java, ListItemViewHolder.Factory()),
+		"Button" to DefaultViewResolver(Button::class.java, ButtonViewHolder.Factory()),
+		"BulletGroup" to DefaultViewResolver(BulletGroup::class.java, BulletGroupViewHolder.Factory()),
+		"Bullet" to DefaultViewResolver(Bullet::class.java, BulletViewHolder.Factory())
 	)
 }

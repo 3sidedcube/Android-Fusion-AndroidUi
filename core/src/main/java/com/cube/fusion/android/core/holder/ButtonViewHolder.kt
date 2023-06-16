@@ -16,7 +16,7 @@ import com.cube.fusion.core.model.views.Button
  * Copyright ® 3SidedCube. All rights reserved.
  */
 class ButtonViewHolder(val binding: TextViewBinding, viewConfig: AndroidFusionViewConfig) : ChildViewHolder<Button>(binding.root, viewConfig) {
-	class Factory : FusionViewHolderFactory {
+	class Factory : FusionViewHolderFactory<Button> {
 		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): ButtonViewHolder {
 			val binding = TextViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 			return ButtonViewHolder(binding, viewConfig)

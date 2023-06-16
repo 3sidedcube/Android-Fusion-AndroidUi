@@ -54,7 +54,7 @@ class ContentActivityImpl : FusionContentActivity() {
 	override val fusionConfig: AndroidFusionConfig get() {
 		val baseUrl = intent.getStringExtra(BASE_URL_EXTRA_KEY) ?: ""
 		val resolvers = ViewHelper.getDefaultViewResolvers().apply {
-			put("Card", DefaultViewResolver(Card::class.java, CardViewHolder.Factory::class.java))
+			put("Card", DefaultViewResolver(Card::class.java, CardViewHolder.Factory()))
 		}
 		val localSource = AssetsPageSource(this, { it }, resolvers.values)
 		return AndroidFusionConfig(

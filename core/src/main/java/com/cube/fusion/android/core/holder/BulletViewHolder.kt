@@ -30,7 +30,7 @@ class BulletViewHolder(val binding: BulletViewBinding, viewConfig: AndroidFusion
 		ViewCompat.setAccessibilityDelegate(binding.cardContainer, delegate)
 	}
 
-	class Factory : FusionViewHolderFactory {
+	class Factory : FusionViewHolderFactory<Bullet> {
 		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): BulletViewHolder {
 			val binding =
 				BulletViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)

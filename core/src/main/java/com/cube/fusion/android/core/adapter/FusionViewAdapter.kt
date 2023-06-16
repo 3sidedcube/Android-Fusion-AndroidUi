@@ -6,12 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cube.fusion.android.core.config.AndroidFusionConfig
 import com.cube.fusion.android.core.config.AndroidFusionViewConfig
 import com.cube.fusion.android.core.holder.FusionViewHolder
-import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
 import com.cube.fusion.android.core.resolver.AndroidViewResolver
 import com.cube.fusion.core.model.Model
 import com.cube.fusion.core.model.views.Screen
 import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
 
 /**
  * The base adapter used for displaying Fusion views in a list.
@@ -44,7 +42,7 @@ class FusionViewAdapter(
 	 * {@hide}
 	 */
 	@Parcelize
-	class AdapterState(val items: @RawValue ArrayList<Model>, val itemsTypes: ArrayList<Class<out FusionViewHolderFactory>?>) : Parcelable
+	class AdapterState(val items: ArrayList<Model>) : Parcelable
 
 	/**
 	 * The list of models of the views we are rendering in the list. This is a 1 dimensional representation
@@ -57,23 +55,22 @@ class FusionViewAdapter(
 	/**
 	 * The different unique item types. This is used to tell the adapter how many unique views we're
 	 * going to be rendering so it knows what and when to recycle. The list is just for index based
-	 * convenience, the object type in the list is a reference to the view holder class we will use
+	 * convenience, the object type in the list is a reference to the resolver we will use
 	 * to render said view.
 	 */
-	private var itemTypes = ArrayList<Class<out FusionViewHolderFactory>?>()
+	private var resolverOrder = resolvers.keys.sorted()
 
 	constructor(androidConfig: AndroidFusionConfig, items: Collection<Model>?) : this(androidConfig) {
 		setItems(items)
 	}
 
 	fun saveState(): AdapterState {
-		return AdapterState(items, itemTypes)
+		return AdapterState(items)
 	}
 
 	fun restoreState(state: AdapterState?) {
 		if (state != null) {
 			items = ArrayList(state.items)
-			itemTypes = ArrayList(state.itemsTypes)
 			notifyDataSetChanged()
 		}
 	}
@@ -86,14 +83,12 @@ class FusionViewAdapter(
 	fun setItems(items: Collection<Model>?) {
 		if (items != null) {
 			this.items = ArrayList(items.size)
-			itemTypes = ArrayList()
 			for (item in items) {
 				addItem(item)
 			}
 		}
 		else {
 			this.items = ArrayList()
-			itemTypes = ArrayList()
 		}
 		notifyDataSetChanged()
 	}
@@ -124,12 +119,9 @@ class FusionViewAdapter(
 			}
 		}
 		else {
-			val holderClass = resolvers[item.`class`]?.resolveViewHolder()
+			val holderClass = resolvers[item.`class`]?.viewHolderFactory
 			if (holderClass != null) {
 				items.add(index, item)
-			}
-			if (!itemTypes.contains(holderClass)) {
-				itemTypes.add(holderClass)
 			}
 		}
 	}
@@ -149,8 +141,8 @@ class FusionViewAdapter(
 	override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): FusionViewHolder<*> {
 		val holder: FusionViewHolder<*>
 		try {
-			val holderFactory = itemTypes[viewType]!!.getConstructor().newInstance()
-			holder = holderFactory.createViewHolder(viewGroup, viewConfig)!!
+			val holderFactory = resolvers[resolverOrder[viewType]]!!.viewHolderFactory
+			holder = holderFactory!!.createViewHolder(viewGroup, viewConfig)!!
 		}
 		catch (e: Exception) {
 			throw IllegalStateException("Could not instantiate a new holder" + e.message, e)
@@ -169,6 +161,6 @@ class FusionViewAdapter(
 
 	override fun getItemViewType(position: Int): Int {
 		val view = items[position]
-		return itemTypes.indexOf((resolvers[view.`class`] ?: error("")).resolveViewHolder())
+		return resolverOrder.indexOf(view.`class`)
 	}
 }
