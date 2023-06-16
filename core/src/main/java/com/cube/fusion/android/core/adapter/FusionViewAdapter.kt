@@ -119,7 +119,7 @@ class FusionViewAdapter(
 			}
 		}
 		else {
-			val holderClass = resolvers[item.`class`]?.resolveViewHolder()
+			val holderClass = resolvers[item.`class`]?.viewHolderFactory
 			if (holderClass != null) {
 				items.add(index, item)
 			}
@@ -141,7 +141,7 @@ class FusionViewAdapter(
 	override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): FusionViewHolder<*> {
 		val holder: FusionViewHolder<*>
 		try {
-			val holderFactory = resolvers[resolverOrder[viewType]]!!.resolveViewHolder()
+			val holderFactory = resolvers[resolverOrder[viewType]]!!.viewHolderFactory
 			holder = holderFactory!!.createViewHolder(viewGroup, viewConfig)!!
 		}
 		catch (e: Exception) {
