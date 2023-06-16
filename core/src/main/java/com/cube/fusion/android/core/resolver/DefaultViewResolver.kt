@@ -10,10 +10,11 @@ import com.cube.fusion.core.model.Model
  * Created by Nikos Rapousis on 12/March/2021.
  * Copyright ® 3SidedCube. All rights reserved.
  *
+ * @param T The type of the view to resolve to
  * @param view The class of the view to resolve to
- * @param viewHolderFactory The factory to use in order to create views for the view
+ * @param viewHolderFactory The factory to use in order to create views for views matching type [T] and class [view]
  */
-class DefaultViewResolver(val view: Class<out Model?>, override val viewHolderFactory: FusionViewHolderFactory<out Model>?) : AndroidViewResolver {
+class DefaultViewResolver<T: Model>(val view: Class<T>, override val viewHolderFactory: FusionViewHolderFactory<T>?) : AndroidViewResolver {
 	override fun resolveView(): Class<out Model?> {
 		return view
 	}
