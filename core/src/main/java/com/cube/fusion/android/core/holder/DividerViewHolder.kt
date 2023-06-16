@@ -19,7 +19,7 @@ import kotlin.math.roundToInt
  * Copyright ® 3SidedCube. All rights reserved.
  */
 class DividerViewHolder(private val binding: DividerViewBinding, viewConfig: AndroidFusionViewConfig) : FusionViewHolder<Divider>(binding.root, viewConfig) {
-	class Factory : FusionViewHolderFactory {
+	class Factory : FusionViewHolderFactory<Divider> {
 		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): DividerViewHolder {
 			val binding = DividerViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 			return DividerViewHolder(binding, viewConfig)

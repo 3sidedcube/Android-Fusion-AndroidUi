@@ -1,6 +1,7 @@
 package com.cube.fusion.android.core.resolver
 
 import com.cube.fusion.android.core.holder.factory.FusionViewHolderFactory
+import com.cube.fusion.core.model.Model
 import com.cube.fusion.core.resolver.ViewResolver
 
 /**
@@ -10,5 +11,5 @@ import com.cube.fusion.core.resolver.ViewResolver
  * Copyright ® 3SidedCube. All rights reserved.
  */
 interface AndroidViewResolver : ViewResolver {
-	val viewHolderFactory: FusionViewHolderFactory?
+	val viewHolderFactory: FusionViewHolderFactory<out Model>?
 }

@@ -30,7 +30,7 @@ import com.cube.fusion.core.model.views.Text
  * Copyright ® 3SidedCube. All rights reserved.
  */
 class TextViewHolder(private val binding: TextViewBinding, viewConfig: AndroidFusionViewConfig) : ChildViewHolder<Text>(binding.root, viewConfig) {
-	class Factory : FusionViewHolderFactory {
+	class Factory : FusionViewHolderFactory<Text> {
 		override fun createViewHolder(parent: ViewGroup, viewConfig: AndroidFusionViewConfig): TextViewHolder {
 			val binding = TextViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 			return TextViewHolder(binding, viewConfig)
